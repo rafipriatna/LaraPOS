@@ -50,7 +50,9 @@
                                         <a href="#" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Hapus</a>
                                     </td>
                                 @empty
-                                    
+                                    <td colspan="8" class="text-center">
+                                        Belum ada data produk.
+                                    </td>
                                 @endforelse
                             </tr>
                         </tbody>
