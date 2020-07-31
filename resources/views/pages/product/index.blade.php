@@ -53,7 +53,7 @@
                                             alt="{{ $item->name }}" class="img-fluid rounded mt-1 mb-1" height="10px" width="80px" />
                                         </td>
                                         <td>{{ $item->name }}</td>
-                                        <td>Rp. {{ $item->purchase_price}}</td>
+                                        <td>Rp. {{ $item->purchase_price }}</td>
                                         <td>Rp. {{ $item->selling_price }}</td>
                                         <td>{{ $item->stock }}</td>
                                         <td>{{ $item->category->name }}</td>
