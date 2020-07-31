@@ -9,19 +9,19 @@
       <ul class="sidebar-menu">
         <li class="menu-header">Dashboard</li>
         <li
-          @if (Request::url() === url('home'))
+          @if (Request::url() === url('/') || Request::url() === url('/admin'))
             class="active"
           @endif
         >
-          <a href="{{ url('home') }}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+          <a href="{{ route('home') }}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
         </li>
         <li class="menu-header">Administrator</li>
         <li
-          @if (Request::url() === url('products'))
+          @if (Request::url() === url('/admin/product'))
             class="active"
           @endif
         >
-          <a class="nav-link" href="{{ url('products') }}"><i class="fas fa-box"></i> <span>Products List</span></a></li>
+          <a class="nav-link" href="{{ route('product.index') }}"><i class="fas fa-box"></i> <span>Product List</span></a></li>
       </ul>   
     </aside>
 </div>

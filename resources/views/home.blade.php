@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Home Page')
+@section('title', $title)
 
 @section('content')
 <div class="main-content">
     <section class="section">
       <div class="section-header">
-        <h1>Blank Page</h1>
+        <h1>Home Page</h1>
       </div>
 
       <div class="section-body">

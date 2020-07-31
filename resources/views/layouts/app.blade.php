@@ -9,6 +9,7 @@
                 @include('layouts.sidebar')
             @endif
             
+            @include('includes.flashMessage')
             @yield('content')
             
             @if (!(Request::url() === url('login')))

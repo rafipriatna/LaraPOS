@@ -7,15 +7,14 @@
     <script src="{{ url('assets/modules/moment.min.js') }}"></script>
     <script src="{{ url('assets/js/stisla.js') }}"></script>
 
-    <!-- JS Libraies -->
-
-    <!-- Page Specific JS File -->
-
+    <!-- Addon Javascript -->
     @yield('addon-script')
 
     <!-- Template JS File -->
     <script src="{{ url('assets/js/scripts.js') }}"></script>
     <script src="{{ url('assets/js/custom.js') }}"></script>
+
+    <script src="{{ url('js/toastr.js') }}"></script>
 
     <footer class="main-footer">
         <div class="footer-left">
