@@ -21,7 +21,14 @@
             class="active"
           @endif
         >
-          <a class="nav-link" href="{{ route('product.index') }}"><i class="fas fa-box"></i> <span>Product List</span></a></li>
-      </ul>   
+          <a class="nav-link" href="{{ route('product.index') }}"><i class="fas fa-box"></i> <span>Products</span></a>
+        </li>
+        <li
+          @if (Request::url() === url('/admin/product'))
+            class="active"
+          @endif
+        >
+          <a class="nav-link" href="{{ route('product.index') }}"><i class="fas fa-tags"></i> <span>Product Categories</span></a></li>
+        </ul>   
     </aside>
 </div>

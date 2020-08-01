@@ -12,12 +12,12 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Products Page</h1>
+            <h1>{{ $title }} Page</h1>
         </div>
 
         <div class="section-body">
             <h2 class="section-title">
-                Products List
+                {{ $title }}
             </h2>
             <p class="section-lead">
                 Berisi daftar produk yang tersedia.

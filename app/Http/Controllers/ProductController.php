@@ -20,7 +20,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $title = "Products List";
+        $title = "Products";
 
         $items = Product::with([
             'category'
