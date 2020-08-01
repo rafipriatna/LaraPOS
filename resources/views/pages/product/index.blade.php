@@ -29,7 +29,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="table-1">
+                        <table class="table table-bordered" id="firstTable">
                             <thead>                                 
                                 <tr>
                                     <th class="text-center">
@@ -93,7 +93,7 @@
 <script src="{{ url('assets/modules/sweetalert/sweetalert.min.js') }}"></script>
 <script src="{{ url('assets/modules/datatables/datatables.min.js') }}"></script>
 <script src="{{ url('assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ url('assets/js/page/modules-datatables.js') }}"></script>
 <script src="{{ url('assets/modules/izitoast/js/iziToast.min.js') }}"></script>
+<script src="{{ url('js/my_datatables.js')}}"></script>
 <script src="{{ url('js/my_sweetalert.js')}}"></script>
 @endsection

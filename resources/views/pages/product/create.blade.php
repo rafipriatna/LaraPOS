@@ -91,7 +91,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>
-                                        Harga Beli (<code>Cukup angka saja, tidak perlu titik atau koma.</code>)
+                                        Harga Beli
                                     </label>
                                     
                                     <div class="input-group">
@@ -100,12 +100,12 @@
                                                 <b>Rp</b>
                                             </div>
                                         </div>
-                                        <input type="number" class="form-control" name="purchase_price">
+                                        <input type="text" class="form-control currency" name="purchase_price" id="">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>
-                                        Harga Jual (<code>Cukup angka saja, tidak perlu titik atau koma.</code>)
+                                        Harga Jual
                                     </label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -113,7 +113,7 @@
                                                 <b>Rp</b>
                                             </div>
                                         </div>
-                                        <input type="number" class="form-control" name="selling_price">
+                                        <input type="text" class="form-control currency" name="selling_price" id="">
                                     </div>
                                 </div>
                             </div>
@@ -130,6 +130,8 @@
 @endsection
 
 @section('addon-script')
+<script src="{{ url('assets/modules/cleave-js/dist/cleave.min.js') }}"></script>
+<script src="{{ url('js/my_cleave.js') }}"></script>
 <script type="text/javascript">
 $('#file').change(function() {
     $('#fileName').html(this.files && this.files.length ? this.files[0].name : '');
