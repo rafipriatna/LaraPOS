@@ -3,5 +3,4 @@ $('.currency').toArray().forEach(function(field){
         numeral: true,
         numeralThousandsGroupStyle: 'thousand',
     });
-    console.log(this.value)
 });

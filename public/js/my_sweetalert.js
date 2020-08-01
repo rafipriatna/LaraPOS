@@ -1,4 +1,4 @@
-$('#firstTable').on('click', '.btn-delete', function(e){
+$('#myTable').on('click', '.btn-delete', function(e){
     e.preventDefault();
     let form = $(this).parents('form');
     swal({

@@ -55,12 +55,18 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        $file = $request->file('photo');
+        $photo = $request->file('photo');
 
         $data = $request->all();
-        $data['photo'] = $file->store(
-            'assets/product', 'public'
-        );
+        
+        if ($photo){
+            $data['photo'] = $photo->store(
+                'assets/product', 'public'
+            );
+        }else{
+            $data['photo'] = "";
+        }
+
         $data['purchase_price'] = str_replace(',', '', $data['purchase_price']);
         $data['selling_price'] = str_replace(',', '', $data['selling_price']);
 
@@ -107,18 +113,17 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
-        $file = $request->file('photo');
+        $photo = $request->file('photo');
+
+        $data = $request->all();
         
-        $data['name'] = $request->input('name');
-        $data['category_id'] = $request->input('category_id');
-        $data['stock'] = $request->input('stock');
-        $data['purchase_price'] = str_replace(',', '', $request->input('purchase_price'));
-        $data['selling_price'] = str_replace(',', '', $request->input('selling_price'));
+        $data['purchase_price'] = str_replace(',', '', $data['purchase_price']);
+        $data['selling_price'] = str_replace(',', '', $data['selling_price']);
         
-        if ($file){
-            $data['photo'] = $file->store(
+        if ($photo){
+            $data['photo'] = $photo->store(
                 'assets/product', 'public'
             );
         }

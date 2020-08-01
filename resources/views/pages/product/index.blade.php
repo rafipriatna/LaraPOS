@@ -47,7 +47,7 @@
                             <tbody>
                                 @forelse ($items as $index => $item)
                                     <tr>
-                                        <td>{{ $index + 1 }}</td>
+                                        <td class="text-center">{{ $index + 1 }}</td>
                                         <td class="text-center">
                                             <img src="{{ Storage::disk('public')->exists($item->photo) ? Storage::url($item->photo) : url('assets/img/image_not_available.png') }}"
                                             alt="{{ $item->name }}" class="img-fluid rounded mt-1 mb-1" height="10px" width="80px" />

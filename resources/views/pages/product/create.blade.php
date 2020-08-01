@@ -35,14 +35,19 @@
 
                             <div class="col-lg-2">
                                 <div class="form-group">
-                                    <label for="">Gambar</label>
-                                    <img src="{{ url('assets/img/image_not_available.png') }}" class="rounded img-responsive" alt="..." width="100%" id="img-preview">
+                                    <label for="">Pratinjau Foto</label>
+                                    <img src="{{ url('assets/img/image_not_available.png') }}" class="rounded img-responsive" alt="Image Preview" width="100%" id="img-preview">
                                 </div>
                             </div>
 
                             <div class="col-lg-5">
                                 <div class="form-group">
                                     <label>Foto</label>
+                                    <label class="float-right">
+                                        <a href="#" data-toggle="tooltip" title="Klik untuk menghapus foto yang sudah dipilih" style="display:none" id="img-reset">
+                                            <code class="text-right">Hapus Foto</code>
+                                        </a>
+                                    </label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
@@ -51,7 +56,7 @@
                                         </div>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="photo" id="img-file">
-                                            <label class="custom-file-label" id="img-name">Choose file</label>
+                                            <label class="custom-file-label" id="img-name">Pilih Foto</label>
                                           </div>
                                     </div>
                                 </div>
