@@ -22,6 +22,7 @@ Route::prefix('/admin')
     ->group(function() {
         Route::get('/', 'HomeController@index');
         Route::resource('product', 'ProductController');
+        Route::resource('product-category', 'ProductCategoryController');
 });
 
 Auth::routes(['verify' => true]);
