@@ -32,7 +32,15 @@
                         @endif
 
                         <div class="row">
-                            <div class="col-lg-6">
+
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label for="">Gambar</label>
+                                    <img src="{{ url('assets/img/image_not_available.png') }}" class="rounded img-responsive" alt="..." width="100%" id="img-preview">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-5">
                                 <div class="form-group">
                                     <label>Foto</label>
                                     <div class="input-group">
@@ -42,8 +50,8 @@
                                             </div>
                                         </div>
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="photo" id="file">
-                                            <label class="custom-file-label" id="fileName">Choose file</label>
+                                            <input type="file" class="custom-file-input" name="photo" id="img-file">
+                                            <label class="custom-file-label" id="img-name">Choose file</label>
                                           </div>
                                     </div>
                                 </div>
@@ -77,7 +85,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+
+                            <div class="col-lg-5">
                                 <div class="form-group">
                                     <label>Stok</label>
                                     <div class="input-group">
@@ -100,7 +109,7 @@
                                                 <b>Rp</b>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control currency" name="purchase_price" id="">
+                                        <input type="text" class="form-control currency" name="purchase_price">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -113,10 +122,11 @@
                                                 <b>Rp</b>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control currency" name="selling_price" id="">
+                                        <input type="text" class="form-control currency" name="selling_price">
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <div class="card-footer text-right">
@@ -132,9 +142,5 @@
 @section('addon-script')
 <script src="{{ url('assets/modules/cleave-js/dist/cleave.min.js') }}"></script>
 <script src="{{ url('js/my_cleave.js') }}"></script>
-<script type="text/javascript">
-$('#file').change(function() {
-    $('#fileName').html(this.files && this.files.length ? this.files[0].name : '');
-})
-</script>
+<script src="{{ url('js/image_upload.js') }}"></script>
 @endsection

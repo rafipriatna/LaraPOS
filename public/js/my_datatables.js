@@ -28,7 +28,7 @@ $("[data-checkboxes]").each(function() {
   });
 });
 
-$("#firstTable").dataTable({
+$("#myTable").dataTable({
   "columnDefs": [
     { "sortable": true, "targets": 1 }
   ]

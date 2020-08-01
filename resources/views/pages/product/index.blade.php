@@ -29,7 +29,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="firstTable">
+                        <table class="table table-bordered" id="myTable">
                             <thead>                                 
                                 <tr>
                                     <th class="text-center">
@@ -53,8 +53,8 @@
                                             alt="{{ $item->name }}" class="img-fluid rounded mt-1 mb-1" height="10px" width="80px" />
                                         </td>
                                         <td>{{ $item->name }}</td>
-                                        <td>Rp. {{ $item->purchase_price }}</td>
-                                        <td>Rp. {{ $item->selling_price }}</td>
+                                        <td>Rp. {{ number_format($item->purchase_price, 0,',','.') }}</td>
+                                        <td>Rp. {{ number_format($item->selling_price, 0,',','.') }}</td>
                                         <td>{{ $item->stock }}</td>
                                         <td>{{ $item->category->name }}</td>
                                         <td class="text-center">

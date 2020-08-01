@@ -61,6 +61,8 @@ class ProductController extends Controller
         $data['photo'] = $file->store(
             'assets/product', 'public'
         );
+        $data['purchase_price'] = str_replace(',', '', $data['purchase_price']);
+        $data['selling_price'] = str_replace(',', '', $data['selling_price']);
 
         Product::create($data);
 
@@ -112,8 +114,8 @@ class ProductController extends Controller
         $data['name'] = $request->input('name');
         $data['category_id'] = $request->input('category_id');
         $data['stock'] = $request->input('stock');
-        $data['purchase_price'] = $request->input('purchase_price');
-        $data['selling_price'] = $request->input('selling_price');
+        $data['purchase_price'] = str_replace(',', '', $request->input('purchase_price'));
+        $data['selling_price'] = str_replace(',', '', $request->input('selling_price'));
         
         if ($file){
             $data['photo'] = $file->store(

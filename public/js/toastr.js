@@ -3,8 +3,6 @@
 const flashMessageSuccess = $('.flash-message-success').data('flashmessage');
 
 if (flashMessageSuccess){
-    console.log('sukses');
-    console.log(flashMessageSuccess);
     iziToast.success({
         title: 'Success',
         message: flashMessageSuccess,
