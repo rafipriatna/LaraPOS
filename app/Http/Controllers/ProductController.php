@@ -25,6 +25,7 @@ class ProductController extends Controller
         $items = Product::with([
             'category'
         ])->get();
+
         return view('pages.product.index', [
             'title' => $title,
             'items' => $items
@@ -41,6 +42,7 @@ class ProductController extends Controller
         $title = "Create new product";
 
         $categories = ProductCategory::all();
+
         return view('pages.product.create', [
             'title' => $title,
             'categories' => $categories
@@ -118,7 +120,6 @@ class ProductController extends Controller
         $photo = $request->file('photo');
 
         $data = $request->all();
-        
         $data['purchase_price'] = str_replace(',', '', $data['purchase_price']);
         $data['selling_price'] = str_replace(',', '', $data['selling_price']);
         

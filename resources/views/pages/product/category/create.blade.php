@@ -24,11 +24,16 @@
                     <div class="card-body">
 
                         @if ($errors->any())
-                            <div class="alert alert-danger col-lg-3">
-                                @foreach ($errors->all() as $error)
-                                    {{ $error }} <br/>
-                                @endforeach    
-                            </div>                
+                            @foreach ($errors->all() as $error)
+                                <div class="alert alert-danger alert-dismissible show fade">
+                                    <div class="alert-body">
+                                        <button class="close" data-dismiss="alert">
+                                        <span>×</span>
+                                        </button>
+                                        {{ $error }}
+                                    </div>
+                                    </div>
+                            @endforeach                  
                         @endif
 
                         <div class="row">

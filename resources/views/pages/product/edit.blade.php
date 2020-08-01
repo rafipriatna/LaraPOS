@@ -6,12 +6,12 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Edit Product</h1>
+            <h1>{{ $title }}</h1>
         </div>
 
         <div class="section-body">
             <h2 class="section-title">
-                EditProduct
+                {{ $title }}
             </h2>
             <p class="section-lead">
                 Halaman untuk mengedit produk.
@@ -24,11 +24,16 @@
                     <div class="card-body">
 
                         @if ($errors->any())
-                            <div class="alert alert-danger col-lg-3">
-                                @foreach ($errors->all() as $error)
-                                    {{ $error }} <br/>
-                                @endforeach    
-                            </div>                
+                            @foreach ($errors->all() as $error)
+                                <div class="alert alert-danger alert-dismissible show fade">
+                                    <div class="alert-body">
+                                        <button class="close" data-dismiss="alert">
+                                        <span>×</span>
+                                        </button>
+                                        {{ $error }}
+                                    </div>
+                                    </div>
+                            @endforeach                  
                         @endif
 
                         <div class="row">
