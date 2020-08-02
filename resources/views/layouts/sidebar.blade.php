@@ -23,7 +23,7 @@
           <a class="nav-link" href="{{ route('user.index') }}"><i class="fas fa-user-friends"></i> <span>Users</span></a>
         </li>
         <li
-          @if (Request::url() === url('/admin/product') || Request::url() === url('/admin/product-category'))
+          @if (Request::url() === route('product.index') || Request::url() === route('product-category.index'))
               class="dropdown active"
           @else
               class="dropdown"
@@ -35,7 +35,7 @@
           <ul class="dropdown-menu">
 
             <li
-              @if (Request::url() === url('/admin/product'))
+              @if (Request::url() === route('product.index'))
                 class="active"
               @endif
             >
@@ -44,7 +44,7 @@
             </li>
 
             <li
-              @if (Request::url() === url('/admin/product-category'))
+              @if (Request::url() === route('product-category.index'))
                 class="active"
               @endif
             >
