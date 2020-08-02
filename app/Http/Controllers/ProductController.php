@@ -10,7 +10,6 @@ use App\ProductCategory;
 
 use App\Http\Requests\ProductRequest;
 
-
 class ProductController extends Controller
 {
     /**
@@ -129,8 +128,7 @@ class ProductController extends Controller
             );
         }
 
-        $product = Product::findOrFail($id);
-        $product->update($data);
+        Product::findOrFail($id)->update($data);
 
         return redirect()->route('product.index')->with('success','Produk berhasil diperbarui!');
     }
@@ -143,8 +141,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
-        $product->delete();
+        Product::findOrFail($id)->delete();
 
         return redirect()->route('product.index')->with('success','Produk berhasil dihapus!');
     }

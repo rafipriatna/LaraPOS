@@ -28,8 +28,6 @@ class UserRequest extends FormRequest
             'name' => 'required|string',
             'email' => 'required|email:rfc,dns|unique:users,email',
             'password' =>  'required|min:8'
-            // 'email' => 'required|email:rfc,dns|unique:App\User,email',
-            // 'password' => 'required_if:users,id,' . !(\Request::instance()->id)
         ];
     }
 }

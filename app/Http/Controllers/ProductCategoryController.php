@@ -96,8 +96,7 @@ class ProductCategoryController extends Controller
     {
         $data = $request->all();
 
-        $productCategory = ProductCategory::findOrFail($id);
-        $productCategory->update($data);
+        ProductCategory::findOrFail($id)->update($data);
 
         return redirect()->route('product-category.index')->with('success','Kategori produk berhasil diperbarui!');
     }
@@ -110,8 +109,7 @@ class ProductCategoryController extends Controller
      */
     public function destroy($id)
     {
-        $productCategory = ProductCategory::findOrFail($id);
-        $productCategory->delete();
+        ProductCategory::findOrFail($id)->delete();
 
         return redirect()->route('product-category.index')->with('success','Kategori produk berhasil dihapus!');
     }

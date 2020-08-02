@@ -6,12 +6,12 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Create New Product</h1>
+            <h1>{{ $title }}</h1>
         </div>
 
         <div class="section-body">
             <h2 class="section-title">
-                Create New Product
+                {{ $title }}
             </h2>
             <p class="section-lead">
                 Halaman untuk menambahkan produk baru.
