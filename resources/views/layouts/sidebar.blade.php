@@ -17,9 +17,10 @@
       </li>
       
       @if (Auth::user()->roles == 'admin')
+
         <li class="menu-header">Administrator</li>
         <li class="{{ (Request::url() === route('user.index')) ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('user.index') }}"><i class="fas fa-users"></i> <span>Users</span></a>
+          <a class="nav-link" href="{{ route('user.index') }}"><i class="fas fa-user-friends"></i> <span>Users</span></a>
         </li>
         <li
           @if (Request::url() === url('/admin/product') || Request::url() === url('/admin/product-category'))
@@ -55,8 +56,15 @@
           </ul>
         </li>
       </li>
+
       @endif
-      
+
+      <li class="menu-header">LaraToko</li>
+        <li class="{{ (Request::url() === route('customer.index')) ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('customer.index') }}"><i class="fas fa-users"></i> <span>Customers</span></a>
+        </li>
+      </li>
+
       </ul>   
     </aside>
 </div>

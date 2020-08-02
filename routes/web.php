@@ -15,8 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
-
 Route::prefix('/admin')
     ->middleware('auth', 'admin')
     ->group(function() {
@@ -24,6 +22,11 @@ Route::prefix('/admin')
         Route::resource('user', 'UserController');
         Route::resource('product', 'ProductController');
         Route::resource('product-category', 'ProductCategoryController');
+});
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::resource('customer', 'CustomerController');
 });
 
 Auth::routes(['verify' => true]);
