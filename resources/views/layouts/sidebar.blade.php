@@ -13,9 +13,12 @@
             class="active"
           @endif
         >
-          <a href="{{ route('home') }}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
-        </li>
-        <li class="menu-header">
+        <a href="{{ route('home') }}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+      </li>
+      <li class="menu-header">Administrator</li>
+          <li class="{{ (Request::url() === route('user.index')) ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('user.index') }}"><i class="fas fa-users"></i> <span>Users</span></a>
+          </li>
           <li
             @if (Request::url() === url('/admin/product') || Request::url() === url('/admin/product-category'))
                 class="dropdown active"
