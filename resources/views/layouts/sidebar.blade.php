@@ -15,44 +15,48 @@
         >
         <a href="{{ route('home') }}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
       </li>
-      <li class="menu-header">Administrator</li>
-          <li class="{{ (Request::url() === route('user.index')) ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('user.index') }}"><i class="fas fa-users"></i> <span>Users</span></a>
-          </li>
-          <li
-            @if (Request::url() === url('/admin/product') || Request::url() === url('/admin/product-category'))
-                class="dropdown active"
-            @else
-                class="dropdown"
-            @endif
-          >
-            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
-              <i class="fas fa-box"></i> <span>Products</span>
-            </a>
-            <ul class="dropdown-menu">
-
-              <li
-                @if (Request::url() === url('/admin/product'))
-                  class="active"
-                @endif
-              >
-                <a class="nav-link" href="{{ route('product.index') }}">
-                  <i class="fas fa-list"></i> <span>Product List</span></a>
-              </li>
-
-              <li
-                @if (Request::url() === url('/admin/product-category'))
-                  class="active"
-                @endif
-              >
-                <a class="nav-link" href="{{ route('product-category.index') }}">
-                  <i class="fas fa-tags"></i> <span>Product Categories</span>
-                </a>
-              </li>
-
-            </ul>
-          </li>
+      
+      @if (Auth::user()->roles == 'admin')
+        <li class="menu-header">Administrator</li>
+        <li class="{{ (Request::url() === route('user.index')) ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('user.index') }}"><i class="fas fa-users"></i> <span>Users</span></a>
         </li>
-        </ul>   
+        <li
+          @if (Request::url() === url('/admin/product') || Request::url() === url('/admin/product-category'))
+              class="dropdown active"
+          @else
+              class="dropdown"
+          @endif
+        >
+          <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+            <i class="fas fa-box"></i> <span>Products</span>
+          </a>
+          <ul class="dropdown-menu">
+
+            <li
+              @if (Request::url() === url('/admin/product'))
+                class="active"
+              @endif
+            >
+              <a class="nav-link" href="{{ route('product.index') }}">
+                <i class="fas fa-list"></i> <span>Product List</span></a>
+            </li>
+
+            <li
+              @if (Request::url() === url('/admin/product-category'))
+                class="active"
+              @endif
+            >
+              <a class="nav-link" href="{{ route('product-category.index') }}">
+                <i class="fas fa-tags"></i> <span>Product Categories</span>
+              </a>
+            </li>
+
+          </ul>
+        </li>
+      </li>
+      @endif
+      
+      </ul>   
     </aside>
 </div>
