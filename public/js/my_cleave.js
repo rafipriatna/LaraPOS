@@ -4,3 +4,10 @@ $('.currency').toArray().forEach(function(field){
         numeralThousandsGroupStyle: 'thousand',
     });
 });
+
+$('.phone-number').toArray().forEach(function(field){
+    new Cleave(field, {
+        phone: true,
+        phoneRegionCode: 'id'
+    });
+});

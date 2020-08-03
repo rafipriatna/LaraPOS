@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Customer;
 
+use App\Http\Requests\CustomerRequest;
+
 class CustomerController extends Controller
 {
     /**
@@ -32,7 +34,11 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        $title = "Create New Customer";
+
+        return view('pages.customer.create', [
+            'title' => $title
+        ]);
     }
 
     /**
@@ -41,9 +47,15 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CustomerRequest $request)
     {
-        //
+        $data = $request->all();
+
+        $data['phone_number'] = str_replace(' ', '', $data['phone_number']);
+
+        Customer::create($data);
+
+        return redirect()->route('customer.index')->with('success','Customer berhasil dibuat!');
     }
 
     /**
@@ -65,7 +77,14 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $title = "Edit Customer";
+
+        $item = Customer::findOrFail($id);
+
+        return view('pages.customer.edit', [
+            'title' => $title,
+            'item' => $item
+        ]);
     }
 
     /**
@@ -75,9 +94,13 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CustomerRequest $request, $id)
     {
-        //
+        $data = $request->all();
+
+        Customer::findOrFail($id)->update($data);
+
+        return redirect()->route('customer.index')->with('success','Customer berhasil diperbarui!');
     }
 
     /**
@@ -88,6 +111,8 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Customer::findOrFail($id)->delete();
+
+        return redirect()->route('customer.index')->with('success','Customer berhasil dihapus!');
     }
 }
