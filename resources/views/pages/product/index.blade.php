@@ -36,6 +36,7 @@
                                     #
                                     </th>
                                     <th>Photo</th>
+                                    <th>Kode Produk</th>
                                     <th>Nama</th>
                                     <th>Harga Beli</th>
                                     <th>Harga Jual</th>
@@ -52,6 +53,7 @@
                                             <img src="{{ Storage::disk('public')->exists($item->photo) ? Storage::url($item->photo) : url('assets/img/image_not_available.png') }}"
                                             alt="{{ $item->name }}" class="img-fluid rounded mt-1 mb-1" height="10px" width="80px" />
                                         </td>
+                                        <td>{{ $item->product_code }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>Rp. {{ number_format($item->purchase_price, 0,',','.') }}</td>
                                         <td>Rp. {{ number_format($item->selling_price, 0,',','.') }}</td>

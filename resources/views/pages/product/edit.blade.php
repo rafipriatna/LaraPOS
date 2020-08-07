@@ -44,9 +44,6 @@
                                     <img src="{{ Storage::disk('public')->exists($item->photo) ? Storage::url($item->photo) : url('assets/img/image_not_available.png') }}"
                                     class="rounded img-responsive" alt="{{ $item->name }}" width="100%" id="img-preview">
                                 </div>
-                            </div>
-
-                            <div class="col-lg-5">
                                 <div class="form-group">
                                     <label>Foto</label>
                                     <label class="float-right">
@@ -64,6 +61,20 @@
                                             <input type="file" class="custom-file-input" name="photo" id="img-file">
                                             <label class="custom-file-label" id="img-name">Pilih Foto</label>
                                           </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-5">
+                                <div class="form-group">
+                                    <label>Kode Produk</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-key"></i>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" name="product_code" value="{{ $item->product_code }}">
                                     </div>
                                 </div>
                                 <div class="form-group">

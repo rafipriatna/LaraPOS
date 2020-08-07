@@ -43,11 +43,7 @@
                                     <label for="">Pratinjau Foto</label>
                                     <img src="{{ url('assets/img/image_not_available.png') }}" class="rounded img-responsive" alt="Image Preview" width="100%" id="img-preview">
                                 </div>
-                            </div>
-
-                            <div class="col-lg-5">
                                 <div class="form-group">
-                                    <label>Foto</label>
                                     <label class="float-right">
                                         <a href="#" data-toggle="tooltip" title="Klik untuk menghapus foto yang sudah dipilih" style="display:none" id="img-reset">
                                             <code class="text-right">Hapus Foto</code>
@@ -65,6 +61,20 @@
                                           </div>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="col-lg-5">
+                                <div class="form-group">
+                                    <label>Kode Produk</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-key"></i>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" name="product_code" value="{{ old('product_code') }}">
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label>Nama</label>
                                     <div class="input-group">
@@ -77,7 +87,11 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Kategori</label>
+                                    <label>Kategori <br/>
+                                        @if ($categories->isEmpty())
+                                            <code>Belum ada kategori klik <a href="{{ route('product-category.index') }}">disini</a> untuk menambah kategori.</code>
+                                        @endif
+                                    </label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
