@@ -64,15 +64,15 @@
           <a class="nav-link" href="{{ route('customer.index') }}"><i class="fas fa-users"></i> <span>Customers</span></a>
         </li>
 
-        <li>
+        <li class="{{ (Request::url() === route('transaction.index') || Request::url() === route('transaction.create')) ? 'dropdown active' : 'dropdown' }}">
           <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
             <i class="fas fa-shopping-cart"></i> <span>Transaction</span>
           </a>
           <ul class="dropdown-menu">
 
-            <li>
-              <a class="nav-link" href="#">
-                <i class="fas fa-cart-plus"></i> <span>Make Transaction</span></a>
+            <li class="{{ Request::url() === route('transaction.create') ? 'active' : '' }}">
+              <a class="nav-link" href="{{ route('transaction.create') }}">
+                <i class="fas fa-cart-plus"></i> <span>Create Transaction</span></a>
             </li>
             
             <li>

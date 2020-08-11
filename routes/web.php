@@ -27,6 +27,7 @@ Route::prefix('/admin')
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::resource('customer', 'CustomerController');
+    Route::resource('transaction', 'TransactionController');
 });
 
 Auth::routes(['verify' => true]);
