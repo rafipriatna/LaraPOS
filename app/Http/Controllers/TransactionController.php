@@ -60,34 +60,42 @@ class TransactionController extends Controller
         $transaction_code = $input['transaction_code'];
 
         $products = Product::where('product_code', $input['product_code'])->get();
-        $saleProducts = Sale::where('transaction_code', $transaction_code)->get();
-
         foreach ($products as $product){
             $product_id = $product->id;
             $product_price = $product->selling_price;
         }
 
+        $saleProducts = Sale::where([
+                ['transaction_code', '=', $transaction_code],
+                ['product_id', '=', $product_id]
+            ])->get();
+
         $total = $input['quantity'] * $product_price;
 
+        $create = [
+            'user_id' => Auth::user()->id,
+            'transaction_code' => $transaction_code,
+            'product_id' => $product_id,
+            'product_price' => $product_price,
+            'quantity' => $input['quantity'],
+            'total_price' => $total
+        ];
+
         // Cek jika produknya sama, maka update qty dan harga totalnya.
-        foreach ($saleProducts as $saleProduct){
-            if ($saleProduct->product_id == $product_id){
-                $data = [
-                    'quantity' => $saleProduct->quantity + $input['quantity'],
-                    'total_price' => $saleProduct->total_price + $total,
-                ];
-                Sale::findOrFail($saleProduct->id)->update($data);
-            }else{
-                $data = [
-                    'user_id' => Auth::user()->id,
-                    'transaction_code' => $transaction_code,
-                    'product_id' => $product_id,
-                    'product_price' => $product_price,
-                    'quantity' => $input['quantity'],
-                    'total_price' => $total
-                ];
-                Sale::create($data);
+        if (!$saleProducts->isEmpty()){
+            foreach ($saleProducts as $saleProduct){
+                if ($saleProduct->product_id == $product_id){
+                    $update = [
+                        'quantity' => $saleProduct->quantity + $input['quantity'],
+                        'total_price' => $saleProduct->total_price + $total,
+                    ];
+                    Sale::findOrFail($saleProduct->id)->update($update);
+                }else{
+                    Sale::create($create);
+                }
             }
+        }else{
+            Sale::create($create);
         }
 
         return redirect()->route('transaction.create', $transaction_code);
