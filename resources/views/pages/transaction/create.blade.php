@@ -3,8 +3,6 @@
 @section('title', $title)
 
 @section('addon-css')
-<link rel="stylesheet" href="{{ url('assets/modules/datatables/datatables.min.css') }}">
-<link rel="stylesheet" href="{{ url('assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ url('assets/modules/izitoast/css/iziToast.min.css') }}">
 @endsection
 
@@ -96,7 +94,7 @@
                                                 <i class="fas fa-barcode"></i>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" name="product_code" placeholder="Kode Produk">
+                                        <input type="text" class="form-control" name="product_code" placeholder="Kode Produk" value="{{ old('product_code') }}">
                                     </div>
                                 </div>
 
@@ -107,7 +105,7 @@
                                                 <i class="fas fa-file-signature"></i>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" name="quantity" placeholder="Banyak yang dibeli">
+                                        <input type="text" class="form-control" name="quantity" placeholder="Quantity" value="{{ old('quantity') }}">
                                     </div>
                                 </div>
                             </div>
@@ -305,5 +303,6 @@
 
 @section('addon-script')
 <script src="{{ url('assets/modules/sweetalert/sweetalert.min.js') }}"></script>
+<script src="{{ url('assets/modules/izitoast/js/iziToast.min.js') }}"></script>
 <script src="{{ url('js/my_sweetalert.js')}}"></script>
 @endsection

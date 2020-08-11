@@ -58,11 +58,13 @@ class TransactionController extends Controller
         $input = $request->all();
 
         $transaction_code = $input['transaction_code'];
+        $quantity = $input['quantity'];
 
         $products = Product::where('product_code', $input['product_code'])->get();
         foreach ($products as $product){
             $product_id = $product->id;
             $product_price = $product->selling_price;
+            $product_stock = $product->stock;
         }
 
         $saleProducts = Sale::where([
@@ -70,35 +72,48 @@ class TransactionController extends Controller
                 ['product_id', '=', $product_id]
             ])->get();
 
-        $total = $input['quantity'] * $product_price;
+        $total = $quantity * $product_price;
+        $reducedStock = $product_stock - $quantity;
+
+        $productStock = [
+            'stock' => $reducedStock
+        ];
 
         $create = [
             'user_id' => Auth::user()->id,
             'transaction_code' => $transaction_code,
             'product_id' => $product_id,
             'product_price' => $product_price,
-            'quantity' => $input['quantity'],
+            'quantity' => $quantity,
             'total_price' => $total
         ];
 
-        // Cek jika produknya sama, maka update qty dan harga totalnya.
-        if (!$saleProducts->isEmpty()){
-            foreach ($saleProducts as $saleProduct){
-                if ($saleProduct->product_id == $product_id){
-                    $update = [
-                        'quantity' => $saleProduct->quantity + $input['quantity'],
-                        'total_price' => $saleProduct->total_price + $total,
-                    ];
-                    Sale::findOrFail($saleProduct->id)->update($update);
-                }else{
-                    Sale::create($create);
+        // Cek stok produk
+        if ((int)$quantity < $product_stock){
+            // Cek jika produknya sama, maka update qty dan harga totalnya.
+            if (!$saleProducts->isEmpty()){
+                foreach ($saleProducts as $saleProduct){
+                    if ($saleProduct->product_id == $product_id){
+                        $update = [
+                            'quantity' => $saleProduct->quantity + $quantity,
+                            'total_price' => $saleProduct->total_price + $total,
+                        ];
+                        Sale::findOrFail($saleProduct->id)->update($update);
+                        Product::findOrFail($product_id)->update($productStock);
+                    }else{
+                        Sale::create($create);
+                        Product::findOrFail($product_id)->update($productStock);
+                    }
                 }
+            }else{
+                Sale::create($create);
+                Product::findOrFail($product_id)->update($productStock);
             }
+            return redirect()->route('transaction.create', $transaction_code);
         }else{
-            Sale::create($create);
+            return redirect()->route('transaction.create', $transaction_code)->with('fail','Jumlah stock produk tidak mencukupi! Stok produk tersisa ' . $product_stock);
         }
 
-        return redirect()->route('transaction.create', $transaction_code);
     }
 
     /**

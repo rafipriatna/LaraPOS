@@ -1,6 +1,7 @@
 "use strict";
 
 const flashMessageSuccess = $('.flash-message-success').data('flashmessage');
+const flashMessageFail = $('.flash-message-fail').data('flashmessage');
 
 if (flashMessageSuccess){
     iziToast.success({
@@ -8,6 +9,12 @@ if (flashMessageSuccess){
         message: flashMessageSuccess,
         position: 'topRight'
     });
+}else{
+  iziToast.error({
+    title: 'Error',
+    message: flashMessageFail,
+    position: 'topRight'
+  });
 }
 
 $("#toast-info").click(function() {
