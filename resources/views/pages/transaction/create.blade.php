@@ -32,7 +32,7 @@
                             </button>
                             {{ $error }}
                         </div>
-                        </div>
+                    </div>
                 @endforeach                  
             @endif
 
@@ -123,7 +123,7 @@
                                 Rp.
                             </div>
                             <div class="card-body text-center align-items-center d-flex justify-content-center">
-                                <h1 class="display-1">180.000</h1>
+                                <h1 class="display-1">{{ number_format($total_price, 0,',','.') }}</h1>
                             </div>
                         </div>
                     </div>
