@@ -23,7 +23,21 @@
                 Halaman untuk membuat transaksi baru.
             </p>
 
-            <form action="" method="POST">
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    <div class="alert alert-danger alert-dismissible show fade">
+                        <div class="alert-body">
+                            <button class="close" data-dismiss="alert">
+                            <span>×</span>
+                            </button>
+                            {{ $error }}
+                        </div>
+                        </div>
+                @endforeach                  
+            @endif
+
+            <form action="{{ route('transaction.createSale') }}" method="POST">
+                @csrf
                 <div class="row">
 
                     <div class="col-lg-4">
@@ -50,7 +64,7 @@
                                                 <i class="fas fa-key"></i>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" value="12345678" readonly>
+                                        <input type="text" class="form-control" value="{{ $transaction_code }}" name="transaction_code" readonly>
                                     </div>
                                 </div>
                                 
@@ -69,6 +83,7 @@
                     </div>
 
                     <div class="col-lg-3">
+                        
                         <div class="card">
                             <div class="card-header">
                                 Produk
@@ -81,7 +96,7 @@
                                                 <i class="fas fa-barcode"></i>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Kode Produk">
+                                        <input type="text" class="form-control" name="product_code" placeholder="Kode Produk">
                                     </div>
                                 </div>
 
@@ -92,12 +107,12 @@
                                                 <i class="fas fa-file-signature"></i>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Banyak yang dibeli">
+                                        <input type="text" class="form-control" name="quantity" placeholder="Banyak yang dibeli">
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer text-right" style="margin-bottom: -9px;">
-                                <button class="btn btn-primary">Kirim</button>
+                                <button type="submit" class="btn btn-primary">Kirim</button>
                             </div>
                         </div>
                     </div>
@@ -135,26 +150,34 @@
                                 </tr>
                               </thead>
                               <tbody>
-                                  <tr>
-                                      <th>1</th>
-                                      <th>
-                                        <img src="{{ url('assets/img/image_not_available.png') }}"
-                                        alt="Foto Produk" class="img-fluid rounded mt-1 mb-1" height="10px" width="80px" />
-                                      </th>
-                                      <th>Testing Produk</th>
-                                      <th>Rp. 180.000</th>
-                                      <th>1</th>
-                                      <th>Rp. 180.000</th>
-                                      <th class="text-right">
-                                        <form action="#" method="post">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn btn-danger btn-icon icon-left btn-delete">
-                                                <i class="fas fa-trash-alt"></i> Hapus
-                                            </button>
-                                        </form>
-                                      </th>
-                                  </tr>
+                                  @forelse ($items as $item)
+                                    <tr>
+                                        <th>1</th>
+                                        <th>
+                                            <img src="{{ Storage::disk('public')->exists($item->product->photo) ? Storage::url($item->product->photo) : url('assets/img/image_not_available.png') }}"
+                                            alt="Foto Produk" class="img-fluid rounded mt-1 mb-1" height="10px" width="80px" />
+                                        </th>
+                                        <th>{{ $item->product->name }}</th>
+                                        <th>Rp. {{ number_format($item->product_price, 0,',','.') }}</th>
+                                        <th>{{ $item->quantity }}</th>
+                                        <th>Rp. {{ number_format($item->total_price, 0,',','.') }}</th>
+                                        <th class="text-right">
+                                            <form action="#" method="post">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="btn btn-danger btn-icon icon-left btn-delete">
+                                                    <i class="fas fa-trash-alt"></i> Hapus
+                                                </button>
+                                            </form>
+                                        </th>
+                                    </tr>
+                                  @empty
+                                    <tr>
+                                        <td colspan="7" class="text-center">
+                                            Belum ada produk yang dibeli.
+                                        </td>
+                                    </tr>
+                                  @endforelse
                               </tbody>
                         </table>
                     </div>

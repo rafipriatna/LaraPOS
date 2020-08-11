@@ -3,6 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+
+use App\Sale;
+use App\Product;
+use Auth;
+
+use App\Http\Requests\SaleRequest;
 
 class TransactionController extends Controller
 {
@@ -22,13 +29,55 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($transaction_code = NULL)
     {
         $title = "Create Transaction";
 
+        if(empty($transaction_code)){
+            $transaction_code = now()->format('dmys') . Sale::all()->count() . Auth::user()->id;
+        }
+        $items = Sale::with([
+            'product'
+        ])->get();
+
         return view('pages.transaction.create', [
-            'title' => $title
+            'title' => $title,
+            'transaction_code' => $transaction_code,
+            'items' => $items
         ]);
+        
+    }
+
+    
+    /**
+     * Store product to transaction.
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function createSale(SaleRequest $request){
+        $input = $request->all();
+
+        $product = Product::where('product_code', $input['product_code'])->first();
+        $product_id = $product->id;
+        $product_price = $product->selling_price;
+
+        $transaction_code = $input['transaction_code'];
+
+        $total = $input['quantity'] * $product_price;
+
+        $data = [
+            'user_id' => Auth::user()->id,
+            'transaction_code' => $transaction_code,
+            'product_id' => $product_id,
+            'product_price' => $product_price,
+            'quantity' => $input['quantity'],
+            'total_price' => $total
+        ];
+
+        Sale::create($data);
+
+        return redirect()->route('transaction.create', $transaction_code);
     }
 
     /**

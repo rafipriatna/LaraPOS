@@ -71,7 +71,7 @@
           <ul class="dropdown-menu">
 
             <li class="{{ Request::url() === route('transaction.create') ? 'active' : '' }}">
-              <a class="nav-link" href="{{ route('transaction.create') }}">
+              <a class="nav-link" href="{{ route('transaction.create', AppHelper::transaction_code()) }}">
                 <i class="fas fa-cart-plus"></i> <span>Create Transaction</span></a>
             </li>
             

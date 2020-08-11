@@ -27,7 +27,12 @@ Route::prefix('/admin')
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::resource('customer', 'CustomerController');
-    Route::resource('transaction', 'TransactionController');
+
+    Route::post('/transaction/createSale/', 'TransactionController@createSale')->name('transaction.createSale');
+    Route::resource('transaction', 'TransactionController')->except([
+        'create'
+    ]);
+    Route::get('/transaction/create/{transaction_code?}', 'TransactionController@create')->name('transaction.create');
 });
 
 Auth::routes(['verify' => true]);
