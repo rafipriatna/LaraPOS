@@ -8,11 +8,8 @@
       </div>
       <ul class="sidebar-menu">
         <li class="menu-header">Dashboard</li>
-        <li
-          @if (Request::url() === url('/') || Request::url() === url('/admin'))
-            class="active"
-          @endif
-        >
+        <li class="{{ (Request::url() === url('/')
+            || Request::url() === url('/admin')) ? 'active' : '' }}">
         <a href="{{ route('home') }}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
       </li>
       
@@ -22,32 +19,19 @@
         <li class="{{ (Request::url() === route('user.index')) ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('user.index') }}"><i class="fas fa-user-friends"></i> <span>Users</span></a>
         </li>
-        <li
-          @if (Request::url() === route('product.index') || Request::url() === route('product-category.index'))
-              class="dropdown active"
-          @else
-              class="dropdown"
-          @endif
-        >
+        <li class="{{ (Request::url() === route('product.index')
+            || Request::url() === route('product-category.index')) ? 'dropdown active' : 'dropdown' }}">
           <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
             <i class="fas fa-box"></i> <span>Products</span>
           </a>
           <ul class="dropdown-menu">
 
-            <li
-              @if (Request::url() === route('product.index'))
-                class="active"
-              @endif
-            >
+            <li class="{{ (Request::url() === route('product.index')) ? 'active' : '' }}">
               <a class="nav-link" href="{{ route('product.index') }}">
                 <i class="fas fa-list"></i> <span>Product List</span></a>
             </li>
 
-            <li
-              @if (Request::url() === route('product-category.index'))
-                class="active"
-              @endif
-            >
+            <li class="{{ (Request::url() === route('product-category.index')) ? 'active' : '' }}">
               <a class="nav-link" href="{{ route('product-category.index') }}">
                 <i class="fas fa-tags"></i> <span>Product Categories</span>
               </a>
@@ -64,13 +48,13 @@
           <a class="nav-link" href="{{ route('customer.index') }}"><i class="fas fa-users"></i> <span>Customers</span></a>
         </li>
 
-        <li class="{{ (Request::url() === route('transaction.index') || Request::url() === route('transaction.create')) ? 'dropdown active' : 'dropdown' }}">
+        <li class="{{ (Request::url() === route('transaction.index') || Request::is('transaction/create/*')) ? 'dropdown active' : 'dropdown' }}">
           <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
             <i class="fas fa-shopping-cart"></i> <span>Transaction</span>
           </a>
           <ul class="dropdown-menu">
 
-            <li class="{{ Request::url() === route('transaction.create') ? 'active' : '' }}">
+            <li class="{{ Request::is('transaction/create/*') ? 'active' : '' }}">
               <a class="nav-link" href="{{ route('transaction.create', AppHelper::transaction_code()) }}">
                 <i class="fas fa-cart-plus"></i> <span>Create Transaction</span></a>
             </li>
