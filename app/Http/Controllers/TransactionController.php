@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Sale;
 use App\Product;
+use App\Customer;
 use Auth;
 
 use App\Http\Requests\SaleRequest;
@@ -38,12 +39,14 @@ class TransactionController extends Controller
             'product'
         ])->where('transaction_code', $transaction_code)->get();
         $total_price = Sale::where('transaction_code', $transaction_code)->sum('total_price');
+        $customers = Customer::all();
 
         return view('pages.transaction.create', [
             'title' => $title,
             'transaction_code' => $transaction_code,
             'items' => $items,
-            'total_price' => $total_price
+            'total_price' => $total_price,
+            'customers' => $customers
         ]);
         
     }

@@ -198,10 +198,9 @@
                             <div class="form-group">
                                 <label>Customer</label>
                                 <select class="custom-select">
-                                    <option selected="">Open this select menu</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    @foreach ($customers as $customer)
+                                        <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
