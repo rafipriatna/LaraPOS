@@ -218,7 +218,7 @@ class TransactionController extends Controller
         $data['paid'] = str_replace(',', '', $data['paid']);
         $data['change'] = str_replace(',', '', $data['change']);
 
-        $transactionCode = now()->format('dmyHis') . Sale::all()->count() . Auth::user()->id;
+        $transactionCode = now()->format('dmyHis') . Transaction::all()->count() . Auth::user()->id;
         
         Transaction::create($data);
         return redirect()->route('transaction.create', $transactionCode)->with('success','Transaksi berhasil disimpan!');
