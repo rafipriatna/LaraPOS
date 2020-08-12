@@ -62,7 +62,7 @@
                                                 <i class="fas fa-key"></i>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" value="{{ $transaction_code }}" name="transaction_code" readonly>
+                                        <input type="text" class="form-control" value="{{ $transactionCode }}" name="transaction_code" readonly>
                                     </div>
                                 </div>
                                 
@@ -121,7 +121,7 @@
                                 Rp.
                             </div>
                             <div class="card-body text-center align-items-center d-flex justify-content-center">
-                                <h1 class="display-1">{{ number_format($total_price, 0,',','.') }}</h1>
+                                <h1 class="display-1 priceDisplay">{{ number_format($subTotal, 0,',',',') }}</h1>
                             </div>
                         </div>
                     </div>
@@ -156,9 +156,9 @@
                                             alt="Foto Produk" class="img-fluid rounded mt-1 mb-1" height="10px" width="80px" />
                                         </th>
                                         <th>{{ $item->product->name }}</th>
-                                        <th>Rp. {{ number_format($item->product_price, 0,',','.') }}</th>
+                                        <th>Rp. {{ number_format($item->product_price, 0,',',',') }}</th>
                                         <th>{{ $item->quantity }}</th>
-                                        <th>Rp. {{ number_format($item->total_price, 0,',','.') }}</th>
+                                        <th>Rp. {{ number_format($item->total_price, 0,',',',') }}</th>
                                         <th class="text-right">
                                             <div class="btn-group" role="group">
                                                 <button class="btn btn-success btn-icon icon-left" data-toggle="modal" data-target="#editItem-{{ $item->id }}">
@@ -187,118 +187,122 @@
                 </div>
             </div>
 
-            <div class="row">
-
-                <div class="col-lg-4">
-                    <div class="card">
-                        <div class="card-header">
-                            Biaya Belanjaan
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label>Customer</label>
-                                <select class="custom-select">
-                                    @foreach ($customers as $customer)
-                                        <option value="{{ $customer->id }}">{{ $customer->name }}</option>
-                                    @endforeach
-                                </select>
+            <form action="{{ route('transaction.storeTransaction') }}" method="post">
+                @csrf
+                <input type="hidden" name="transaction_code" value="{{ $transactionCode }}">
+                <div class="row">
+    
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-header">
+                                Opsi
                             </div>
-
-                            <div class="form-group">
-                                <label>Sub Total</label>
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                      <div class="input-group-text">Rp.</div>
-                                    </div>
-                                    <input type="text" class="form-control" value="180.000" readonly/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg">
-                    <div class="card">
-                        <div class="card-header">
-                            Pembayaran
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label>Kode Promo <code>(Jika ada)</code></label>
-                                        <div class="input-group mb-3">
-                                            <input type="text" class="form-control">
-                                            <div class="input-group-append">
-                                              <button class="btn btn-primary" type="button">Cek</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label>Diskon</label>
-                                        <div class="input-group mb-2">
-                                            <input type="text" class="form-control" readonly>
-                                            <div class="input-group-append">
-                                              <div class="input-group-text">%</div>
-                                            </div>
-                                          </div>
-                                    </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>Customer</label>
+                                    <select name="customer_id" class="custom-select">
+                                        @foreach ($customers as $customer)
+                                            <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
     
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label>Potongan Diskon</label>
-                                        <div class="input-group mb-2">
-                                            <div class="input-group-prepend">
-                                              <div class="input-group-text">Rp.</div>
-                                            </div>
-                                            <input type="text" class="form-control" readonly/>
+                                <div class="form-group">
+                                    <label>Sub Total</label>
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                          <div class="input-group-text">Rp.</div>
                                         </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label>Grand Total</label>
-                                        <div class="input-group mb-2">
-                                            <div class="input-group-prepend">
-                                              <div class="input-group-text">Rp.</div>
-                                            </div>
-                                            <input type="text" class="form-control" readonly/>
-                                        </div>
+                                        <input type="text" name="sub_total" class="form-control currency" value="{{ $subTotal }}" readonly/>
                                     </div>
                                 </div>
-
-                                <div class="col-lg">
-                                    <div class="form-group">
-                                        <label>Dibayar</label>
-                                        <div class="input-group mb-2">
-                                            <div class="input-group-prepend">
-                                              <div class="input-group-text">Rp.</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="col-lg">
+                        <div class="card">
+                            <div class="card-header">
+                                Pembayaran
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Kupon <code>(Jika ada)</code></label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" name="coupon_code" class="form-control">
+                                                <div class="input-group-append">
+                                                  <button class="btn btn-primary" type="button">Cek</button>
+                                                </div>
                                             </div>
-                                            <input type="text" class="form-control"/>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Diskon</label>
+                                            <div class="input-group mb-2">
+                                                <input type="text" name="discount" class="form-control" value="0" readonly>
+                                                <div class="input-group-append">
+                                                  <div class="input-group-text">%</div>
+                                                </div>
+                                              </div>
                                         </div>
                                     </div>
-
-                                    <div class="form-group">
-                                        <label>Kembalian</label>
-                                        <div class="input-group mb-2">
-                                            <div class="input-group-prepend">
-                                              <div class="input-group-text">Rp.</div>
+        
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Potongan Diskon</label>
+                                            <div class="input-group mb-2">
+                                                <div class="input-group-prepend">
+                                                  <div class="input-group-text">Rp.</div>
+                                                </div>
+                                                <input type="text" name="discount_price" class="form-control currency" value="0" readonly/>
                                             </div>
-                                            <input type="text" class="form-control" readonly/>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Grand Total</label>
+                                            <div class="input-group mb-2">
+                                                <div class="input-group-prepend">
+                                                  <div class="input-group-text">Rp.</div>
+                                                </div>
+                                                <input type="text" name="grand_total" class="form-control currency" value="{{ $subTotal }}" readonly/>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <div class="col-lg">
+                                        <div class="form-group">
+                                            <label>Dibayar</label>
+                                            <div class="input-group mb-2">
+                                                <div class="input-group-prepend">
+                                                  <div class="input-group-text">Rp.</div>
+                                                </div>
+                                                <input type="text" name="paid" class="form-control currency"/>
+                                            </div>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label>Kembalian</label>
+                                            <div class="input-group mb-2">
+                                                <div class="input-group-prepend">
+                                                  <div class="input-group-text">Rp.</div>
+                                                </div>
+                                                <input type="text" name="change" class="form-control currency" value="0" readonly/>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+    
                 </div>
-
-            </div>
-
-            <div class="text-right">
-                <button class="btn btn-primary">Buat Transaksi</button>
-            </div>
+    
+                <div class="text-right">
+                    <button type="submit" class="btn btn-primary">Buat Transaksi</button>
+                </div>
+            </form>
 
         </div>
     </section>
@@ -343,5 +347,42 @@
 @section('addon-script')
 <script src="{{ url('assets/modules/sweetalert/sweetalert.min.js') }}"></script>
 <script src="{{ url('assets/modules/izitoast/js/iziToast.min.js') }}"></script>
+<script src="{{ url('assets/modules/cleave-js/dist/cleave.min.js') }}"></script>
+<script src="{{ url('js/my_cleave.js') }}"></script>
 <script src="{{ url('js/my_sweetalert.js')}}"></script>
+<script>
+$( document ).ready(function() {
+
+    function currencyFormat(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+
+    let discount = $('[name="discount"]').val();
+    let discountPrice = $('[name="discount_price"]');
+    let subTotal = $('[name="sub_total"]').val().replace(',', '');
+    let grandTotal = $('[name="grand_total"]');
+    let paid = $('[name="paid"]');
+    let change = $('[name="change"]');
+    let priceDisplay = $('.priceDisplay');
+
+    let sumDiscountPrice = subTotal * discount/100;
+
+    discountPrice.val(currencyFormat(sumDiscountPrice));
+    grandTotal.val(currencyFormat(subTotal - sumDiscountPrice));
+    priceDisplay.html(currencyFormat(subTotal - sumDiscountPrice));
+
+    paid.on('input', function() {
+        paidValue = paid.val().replace(/,/g, '');
+        changeValue = paidValue - grandTotal.val().replace(/,/g, '');
+
+        if (changeValue < 0){
+            change.val(0)
+        }else{
+            change.val(currencyFormat(changeValue));
+        }
+    });
+
+});    
+</script>
 @endsection

@@ -9,9 +9,11 @@ use Illuminate\Support\Facades\Validator;
 use App\Sale;
 use App\Product;
 use App\Customer;
+use App\Transaction;
 use Auth;
 
 use App\Http\Requests\SaleRequest;
+use App\Http\Requests\TransactionRequest;
 
 class TransactionController extends Controller
 {
@@ -31,22 +33,24 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($transaction_code = NULL)
+    public function create($transactionCode = NULL)
     {
         $title = "Create Transaction";
 
-        $items = Sale::with([
+        $sales = Sale::with([
             'product'
-        ])->where('transaction_code', $transaction_code)->get();
-        $total_price = Sale::where('transaction_code', $transaction_code)->sum('total_price');
+        ])->where('transaction_code', $transactionCode);
+        $items = $sales->get();
+        $subTotal = $sales->sum('total_price');
+
         $customers = Customer::all();
 
         return view('pages.transaction.create', [
             'title' => $title,
-            'transaction_code' => $transaction_code,
+            'transactionCode' => $transactionCode,
             'items' => $items,
-            'total_price' => $total_price,
-            'customers' => $customers
+            'customers' => $customers,
+            'subTotal' => $subTotal
         ]);
         
     }
@@ -195,5 +199,28 @@ class TransactionController extends Controller
 
         Sale::findOrFail($id)->delete();
         return redirect()->route('transaction.create', $transactionCode);
+    }
+
+    /**
+     * Store a newly created transaction in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeTransaction(TransactionRequest $request)
+    {
+        $data = $request->all();
+
+        $data['coupon_code'] = $data['coupon_code'] !== null ? $data['coupon_code'] : 0;
+        $data['sub_total'] = str_replace(',', '', $data['sub_total']);
+        $data['discount_price'] = str_replace(',', '', $data['discount_price']);
+        $data['grand_total'] = str_replace(',', '', $data['grand_total']);
+        $data['paid'] = str_replace(',', '', $data['paid']);
+        $data['change'] = str_replace(',', '', $data['change']);
+
+        $transactionCode = now()->format('dmyHis') . Sale::all()->count() . Auth::user()->id;
+        
+        Transaction::create($data);
+        return redirect()->route('transaction.create', $transactionCode)->with('success','Transaksi berhasil disimpan!');
     }
 }

@@ -28,6 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::resource('customer', 'CustomerController');
 
+    Route::post('/transaction/storeTransaction', 'TransactionController@storeTransaction')->name('transaction.storeTransaction');
     Route::resource('transaction', 'TransactionController')->except([
         'create'
     ]);
