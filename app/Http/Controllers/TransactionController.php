@@ -33,7 +33,7 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($transactionCode = NULL)
+    public function create($transactionCode)
     {
         $title = "Create Transaction";
 
