@@ -164,10 +164,10 @@
                                                 <button class="btn btn-success btn-icon icon-left" data-toggle="modal" data-target="#editItem-{{ $item->id }}">
                                                     <i class="fas fa-edit"></i> Edit
                                                 </button>
-                                                <form action="#" method="post">
+                                                <form action="{{ route('transaction.destroy', $item->id) }}" method="post">
                                                     @csrf
                                                     @method('delete')
-                                                    <button type="submit" class="btn btn-danger btn-icon icon-left btn-delete">
+                                                    <button type="submit" class="btn btn-danger btn-icon icon-left btn-delete" data-namaproduk="{{ $item->product->name }}">
                                                         <i class="fas fa-trash-alt"></i> Hapus
                                                     </button>
                                                 </form>

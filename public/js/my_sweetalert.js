@@ -24,3 +24,21 @@ $('#myTable').on('click', '.btn-delete', function(e){
       });
 });
 
+$('.btn-delete').click(function(e){
+    let namaProduk = $('.btn-delete').data('namaproduk');
+    e.preventDefault();
+    let form = $(this).parents('form');
+    swal({
+        title: 'Konfirmasi',
+        text: 'Hapus ' + namaProduk + '?',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+        buttons: ['Batal', 'Ok']
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+            form.submit();
+        }
+      });
+});

@@ -202,6 +202,19 @@ class TransactionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $saleProduct = Sale::findOrFail($id);
+        $productSaleQuantity = $saleProduct->quantity;
+        $productId = $saleProduct->product_id;
+        $transactionCode = $saleProduct->transaction_code;
+
+        $productStock = Product::findOrFail($productId)->stock;
+        $originalProductStock = $productStock + $productSaleQuantity;
+        
+        Product::findOrFail($productId)->update([
+            'stock' => $originalProductStock
+        ]);
+
+        Sale::findOrFail($id)->delete();
+        return redirect()->route('transaction.create', $transactionCode);
     }
 }
