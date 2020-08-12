@@ -48,30 +48,6 @@ class TransactionController extends Controller
         
     }
 
-    
-    /**
-     * Store a newly created sale in storage.
-     * 
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function createSale(SaleRequest $request)
-    {
-        
-    }
-
-    /**
-     * Update the specified sale in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function updateSale(Request $request, $id)
-    {
-        
-    }
-
     /**
      * Store a newly created resource in storage.
      *
