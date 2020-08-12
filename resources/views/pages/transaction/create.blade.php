@@ -94,7 +94,7 @@
                                                 <i class="fas fa-barcode"></i>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" name="product_code" placeholder="Kode Produk" value="{{ old('product_code') }}">
+                                        <input type="text" class="form-control" name="product_code" placeholder="Kode Produk" value="{{ old('product_code') }}" required>
                                     </div>
                                 </div>
 
@@ -105,7 +105,7 @@
                                                 <i class="fas fa-file-signature"></i>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" name="quantity" placeholder="Quantity" value="{{ old('quantity') }}">
+                                        <input type="number" class="form-control" name="quantity" placeholder="Quantity" value="{{ old('quantity') }}" required>
                                     </div>
                                 </div>
                             </div>
@@ -148,9 +148,9 @@
                                 </tr>
                               </thead>
                               <tbody>
-                                  @forelse ($items as $item)
+                                  @forelse ($items as $index => $item)
                                     <tr>
-                                        <th>1</th>
+                                        <th>{{ $index + 1 }}</th>
                                         <th>
                                             <img src="{{ Storage::disk('public')->exists($item->product->photo) ? Storage::url($item->product->photo) : url('assets/img/image_not_available.png') }}"
                                             alt="Foto Produk" class="img-fluid rounded mt-1 mb-1" height="10px" width="80px" />
@@ -160,13 +160,18 @@
                                         <th>{{ $item->quantity }}</th>
                                         <th>Rp. {{ number_format($item->total_price, 0,',','.') }}</th>
                                         <th class="text-right">
-                                            <form action="#" method="post">
-                                                @csrf
-                                                @method('delete')
-                                                <button type="submit" class="btn btn-danger btn-icon icon-left btn-delete">
-                                                    <i class="fas fa-trash-alt"></i> Hapus
+                                            <div class="btn-group" role="group">
+                                                <button class="btn btn-success btn-icon icon-left" data-toggle="modal" data-target="#editItem-{{ $item->id }}">
+                                                    <i class="fas fa-edit"></i> Edit
                                                 </button>
-                                            </form>
+                                                <form action="#" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-danger btn-icon icon-left btn-delete">
+                                                        <i class="fas fa-trash-alt"></i> Hapus
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </th>
                                     </tr>
                                   @empty
@@ -299,6 +304,41 @@
         </div>
     </section>
 </div>
+
+@foreach ($items as $item)
+    <div class="modal fade" tabindex="-1" role="dialog" id="editItem-{{ $item->id }}">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="{{ route('transaction.updateSale', $item->id) }}" method="POST">
+                    @method('PUT')
+                    @csrf
+                    <input type="hidden" name="transaction_code" value="{{ $item->transaction_code }}">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{ $item->product->name }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Kode Produk</label>
+                            <input type="text" class="form-control" value="{{ $item->product->product_code }}" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label>Quantity</label>
+                            <input type="number" name="quantity" class="form-control" value="{{ $item->quantity }}" required/>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+@endforeach
 @endsection
 
 @section('addon-script')

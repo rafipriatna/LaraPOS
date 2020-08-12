@@ -29,6 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('customer', 'CustomerController');
 
     Route::post('/transaction/createSale/', 'TransactionController@createSale')->name('transaction.createSale');
+    Route::put('/transaction/updateSale/{id}', 'TransactionController@updateSale')->name('transaction.updateSale');
     Route::resource('transaction', 'TransactionController')->except([
         'create'
     ]);
