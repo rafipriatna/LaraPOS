@@ -34,7 +34,7 @@
                 @endforeach                  
             @endif
 
-            <form action="{{ route('transaction.store') }}" method="POST">
+            <form action="{{ route('sale.store') }}" method="POST">
                 @csrf
                 <div class="row">
 
@@ -164,7 +164,7 @@
                                                 <button class="btn btn-success btn-icon icon-left" data-toggle="modal" data-target="#editItem-{{ $item->id }}">
                                                     <i class="fas fa-edit"></i> Edit
                                                 </button>
-                                                <form action="{{ route('transaction.destroy', $item->id) }}" method="post">
+                                                <form action="{{ route('sale.destroy', $item->id) }}" method="post">
                                                     @csrf
                                                     @method('delete')
                                                     <button type="submit" class="btn btn-danger btn-icon icon-left btn-delete" data-namaproduk="{{ $item->product->name }}">
@@ -187,7 +187,7 @@
                 </div>
             </div>
 
-            <form action="{{ route('transaction.storeTransaction') }}" method="post">
+            <form action="{{ route('transaction.store') }}" method="post">
                 @csrf
                 <input type="hidden" name="transaction_code" value="{{ $transactionCode }}">
                 <div class="row">
@@ -312,7 +312,7 @@
     <div class="modal fade" tabindex="-1" role="dialog" id="editItem-{{ $item->id }}">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form action="{{ route('transaction.update', $item->id) }}" method="POST">
+                <form action="{{ route('sale.update', $item->id) }}" method="POST">
                     @method('PUT')
                     @csrf
                     <input type="hidden" name="transaction_code" value="{{ $item->transaction_code }}">
