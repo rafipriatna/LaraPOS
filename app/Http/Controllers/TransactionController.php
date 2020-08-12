@@ -57,6 +57,29 @@ class TransactionController extends Controller
      */
     public function createSale(SaleRequest $request)
     {
+        
+    }
+
+    /**
+     * Update the specified sale in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateSale(Request $request, $id)
+    {
+        
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(SaleRequest $request)
+    {
         $input = $request->all();
 
         $transactionCode = $input['transaction_code'];
@@ -118,13 +141,13 @@ class TransactionController extends Controller
     }
 
     /**
-     * Update the specified sale in storage.
+     * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateSale(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $input = $request->all();
 
@@ -169,51 +192,6 @@ class TransactionController extends Controller
         }else{
             return redirect()->route('transaction.create', $transactionCode)->with('fail','Jumlah stock produk tidak mencukupi! Stok produk tersisa ' . $productStock);
         }
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     /**

@@ -34,7 +34,7 @@
                 @endforeach                  
             @endif
 
-            <form action="{{ route('transaction.createSale') }}" method="POST">
+            <form action="{{ route('transaction.store') }}" method="POST">
                 @csrf
                 <div class="row">
 
@@ -309,7 +309,7 @@
     <div class="modal fade" tabindex="-1" role="dialog" id="editItem-{{ $item->id }}">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form action="{{ route('transaction.updateSale', $item->id) }}" method="POST">
+                <form action="{{ route('transaction.update', $item->id) }}" method="POST">
                     @method('PUT')
                     @csrf
                     <input type="hidden" name="transaction_code" value="{{ $item->transaction_code }}">
