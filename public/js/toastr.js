@@ -9,7 +9,9 @@ if (flashMessageSuccess){
         message: flashMessageSuccess,
         position: 'topRight'
     });
-}else{
+}
+
+if (flashMessageFail){
   iziToast.error({
     title: 'Error',
     message: flashMessageFail,
