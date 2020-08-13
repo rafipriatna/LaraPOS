@@ -49,7 +49,7 @@
                                             <i class="far fa-user"></i>
                                         </div>
                                     </div>
-                                    <input type="text" class="form-control" value="Rafi" disabled>
+                                    <input type="text" class="form-control" value="{{ $data['user'] }}" disabled>
                                 </div>
                             </div>
                             

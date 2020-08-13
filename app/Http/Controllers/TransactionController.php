@@ -106,13 +106,16 @@ class TransactionController extends Controller
             'user'
         ])->where('transaction_code', $transactionCode)->first();
 
+        $user = User::findOrFail($transaction->user_id)->name;
+
         $data = [
             'date' => $transaction->created_at->toDateTimeString(),
             'couponCode' => $transaction->coupon_code ? $transaction->coupon_code : '',
             'customerId' => $transaction->customer_id,
             'discount' => $transaction->discount,
             'paid' => $transaction->paid,
-            'change' => $transaction->change
+            'change' => $transaction->change,
+            'user' => $user
         ];
 
         return view('pages.transaction.show', [

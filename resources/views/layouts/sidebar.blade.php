@@ -64,8 +64,8 @@
                 <i class="ion-bag"></i> <span>Create Transaction</span></a>
             </li>
             
-            <li>
-              <a class="nav-link" href="#">
+            <li class="{{ Request::url() === route('transaction.index') ? 'active' : '' }}">
+              <a class="nav-link" href="{{ route('transaction.index') }}">
                 <i class="ion-ios-list"></i> <span>Transaction List</span></a>
             </li>
 

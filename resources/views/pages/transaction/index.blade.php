@@ -45,7 +45,7 @@
                                         <td class="text-center">{{ $index + 1 }}</td>
                                         <td>{{ $item->transaction_code }}</td>
                                         <td>{{ $item->customer->name }}</td>
-                                        <td>{{ $item->grand_total }}</td>
+                                        <td>{{ number_format($item->grand_total, 0,',',',') }}</td>
                                         <td>{{ date('d-m-Y', strtotime($item->created_at)) }}</td>
                                         <td class="text-center">
                                             <a href="{{ route('transaction.show', $item->transaction_code) }}" class="btn btn-primary btn-icon icon-left">
