@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Sale;
 use App\Customer;
 use App\Transaction;
+use App\User;
 use Auth;
 
 use App\Http\Requests\SaleRequest;
@@ -21,8 +22,16 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
-        echo "test";
+        $title = "Transaction List";
+
+        $items = Transaction::with([
+            'customer'
+        ])->get();
+
+        return view('pages.transaction.index', [
+            'title' => $title,
+            'items' => $items
+        ]);
     }
 
     /**
@@ -49,7 +58,6 @@ class TransactionController extends Controller
             'customers' => $customers,
             'subTotal' => $subTotal
         ]);
-        
     }
 
     /**
@@ -73,6 +81,49 @@ class TransactionController extends Controller
         
         Transaction::create($data);
         return redirect()->route('transaction.create', $transactionCode)->with('success','Transaksi berhasil disimpan!');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($transactionCode)
+    {
+        $title = "Transaction";
+
+        $sales = Sale::with([
+            'product'
+        ])->where('transaction_code', $transactionCode);
+        $items = $sales->get();
+        $subTotal = $sales->sum('total_price');
+
+        $customers = Customer::all();
+
+        $transaction = Transaction::with([
+            'customer',
+            'user'
+        ])->where('transaction_code', $transactionCode)->first();
+
+        $data = [
+            'date' => $transaction->created_at->toDateTimeString(),
+            'couponCode' => $transaction->coupon_code ? $transaction->coupon_code : '',
+            'customerId' => $transaction->customer_id,
+            'discount' => $transaction->discount,
+            'paid' => $transaction->paid,
+            'change' => $transaction->change
+        ];
+
+        return view('pages.transaction.show', [
+            'title' => $title,
+            'transactionCode' => $transactionCode,
+            'items' => $items,
+            'customers' => $customers,
+            'subTotal' => $subTotal,
+            'data' => $data
+        ]);
+        
     }
 
     /**
