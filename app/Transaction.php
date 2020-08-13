@@ -10,7 +10,7 @@ use App\User;
 class Transaction extends Model
 {
     protected $fillable = [
-        'transaction_code', 'customer_id', 'coupon_code',
+        'transaction_code', 'user_id', 'customer_id', 'coupon_code',
         'discount', 'discount_price', 'sub_total',
         'grand_total', 'paid', 'change'        
     ];

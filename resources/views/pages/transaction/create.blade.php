@@ -305,6 +305,7 @@
                 </div>
     
                 <div class="text-right">
+                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                     <button type="submit" class="btn btn-primary">Buat Transaksi</button>
                 </div>
             </form>
