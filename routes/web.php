@@ -22,13 +22,13 @@ Route::prefix('/admin')
         Route::resource('user', 'UserController');
         Route::resource('product', 'ProductController');
         Route::resource('product-category', 'ProductCategoryController');
+        Route::resource('customer', 'CustomerController');
+        Route::resource('coupon', 'CouponController');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
     
-    Route::resource('customer', 'CustomerController');
-
     Route::resource('sale', 'SaleController');
     Route::post('/transaction/storeTransaction', 'TransactionController@storeTransaction')->name('transaction.storeTransaction');
     Route::resource('transaction', 'TransactionController')->except([
