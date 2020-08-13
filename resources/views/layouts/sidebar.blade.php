@@ -10,63 +10,68 @@
         <li class="menu-header">Dashboard</li>
         <li class="{{ (Request::url() === url('/')
             || Request::url() === url('/admin')) ? 'active' : '' }}">
-        <a href="{{ route('home') }}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+        <a href="{{ route('home') }}" class="nav-link"><i class="ion-android-home"></i> <span>Dashboard</span></a>
       </li>
       
       @if (Auth::user()->roles == 'admin')
 
         <li class="menu-header">Administrator</li>
         <li class="{{ (Request::url() === route('user.index')) ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('user.index') }}"><i class="fas fa-user-friends"></i> <span>Users</span></a>
+          <a class="nav-link" href="{{ route('user.index') }}"><i class="ion-android-person"></i> <span>Users</span></a>
         </li>
         <li class="{{ (Request::url() === route('product.index')
             || Request::url() === route('product-category.index')) ? 'dropdown active' : 'dropdown' }}">
           <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
-            <i class="fas fa-box"></i> <span>Products</span>
+            <i class="ion-cube"></i> <span>Products</span>
           </a>
           <ul class="dropdown-menu">
 
             <li class="{{ (Request::url() === route('product.index')) ? 'active' : '' }}">
               <a class="nav-link" href="{{ route('product.index') }}">
-                <i class="fas fa-list"></i> <span>Product List</span></a>
+                <i class="ion-android-list"></i> <span>Product List</span></a>
             </li>
 
             <li class="{{ (Request::url() === route('product-category.index')) ? 'active' : '' }}">
               <a class="nav-link" href="{{ route('product-category.index') }}">
-                <i class="fas fa-tags"></i> <span>Product Categories</span>
+                <i class="ion-pricetags"></i> <span>Product Categories</span>
               </a>
             </li>
 
           </ul>
+
+          <li class="{{ (Request::url() === route('customer.index')) ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('customer.index') }}"><i class="ion-person-stalker"></i> <span>Customers</span></a>
+          </li>
+
+          <li class="{{ (Request::url() === route('coupon.index')) ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('coupon.index') }}"><i class="ion-cash"></i> <span>Coupons</span></a>
+          </li>
+
         </li>
       </li>
 
       @endif
 
       <li class="menu-header">LaraToko</li>
-        <li class="{{ (Request::url() === route('customer.index')) ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('customer.index') }}"><i class="fas fa-users"></i> <span>Customers</span></a>
-        </li>
-
         <li class="{{ (Request::url() === route('transaction.index') || Request::is('transaction/create/*')) ? 'dropdown active' : 'dropdown' }}">
           <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
-            <i class="fas fa-shopping-cart"></i> <span>Transaction</span>
+            <i class="ion-ios-cart"></i> <span>Transaction</span>
           </a>
           <ul class="dropdown-menu">
 
             <li class="{{ Request::is('transaction/create/*') ? 'active' : '' }}">
               <a class="nav-link" href="{{ route('transaction.create', AppHelper::transaction_code()) }}">
-                <i class="fas fa-cart-plus"></i> <span>Create Transaction</span></a>
+                <i class="ion-bag"></i> <span>Create Transaction</span></a>
             </li>
             
             <li>
               <a class="nav-link" href="#">
-                <i class="fas fa-list-alt"></i> <span>Transaction List</span></a>
+                <i class="ion-ios-list"></i> <span>Transaction List</span></a>
             </li>
 
             <li>
               <a class="nav-link" href="#">
-                <i class="far fa-chart-bar"></i> <span>Transaction Report</span></a>
+                <i class="ion-clipboard"></i> <span>Transaction Report</span></a>
             </li>
 
           </ul>

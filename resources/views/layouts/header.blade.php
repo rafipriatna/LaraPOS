@@ -11,6 +11,7 @@
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ url('assets/modules/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url('assets/modules/fontawesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/modules/ionicons/css/ionicons.min.css') }}">
 
     <!-- Addon CSS -->
     @yield('addon-css')
@@ -18,5 +19,6 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ url('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ url('assets/css/components.css') }}">
+    <script src="{{ url('assets/js/page/modules-ion-icons.js') }}"></script>
 
 </head>
