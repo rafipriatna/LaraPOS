@@ -233,6 +233,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-4">
+                                        <input type="hidden" name="coupon_code" value="{{ session('coupon_code') }}" />
                                         <div class="form-group">
                                             <label>Diskon</label>
                                             <div class="input-group mb-2">
