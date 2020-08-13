@@ -41,6 +41,10 @@ class TransactionController extends Controller
      */
     public function create($transactionCode)
     {
+        if (is_null($transactionCode)){
+            abort(404);
+        }
+
         $title = "Create Transaction";
 
         $sales = Sale::with([
@@ -106,7 +110,7 @@ class TransactionController extends Controller
             'user'
         ])->where('transaction_code', $transactionCode)->first();
 
-        $user = User::findOrFail($transaction->user_id)->name;
+        $user = User::findOrFail($transaction['user_id'])->name;
 
         $data = [
             'date' => $transaction->created_at->toDateTimeString(),
