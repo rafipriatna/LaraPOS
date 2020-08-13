@@ -25,12 +25,11 @@ $('#myTable').on('click', '.btn-delete', function(e){
 });
 
 $('.btn-delete').click(function(e){
-    let namaProduk = $('.btn-delete').data('namaproduk');
     e.preventDefault();
     let form = $(this).parents('form');
     swal({
         title: 'Konfirmasi',
-        text: 'Hapus ' + namaProduk + '?',
+        text: 'Hapus produk?',
         icon: 'warning',
         buttons: true,
         dangerMode: true,

@@ -49,6 +49,7 @@ class SaleController extends Controller
         $products = Product::where('product_code', $input['product_code'])->get();
         foreach ($products as $product){
             $productId = $product->id;
+            $productName = $product->name;
             $productPrice = $product->selling_price;
             $productStock = $product->stock;
         }
@@ -61,7 +62,7 @@ class SaleController extends Controller
         $total = $quantity * $productPrice;
         $reducedStock = $productStock - $quantity;
 
-        $productStock = [
+        $reduceProductStock = [
             'stock' => $reducedStock
         ];
 
@@ -75,7 +76,9 @@ class SaleController extends Controller
         ];
 
         // Cek stok produk
-        if ((int)$quantity < $productStock){
+        if ($productStock == 0){
+            return redirect()->back()->withErrors('Stok ' . $productName . ' kosong!');
+        }elseif ((int)$quantity < $productStock){
             // Cek jika produknya sama, maka update qty, harga totalnya, dan update stock barang.
             if (!$saleProducts->isEmpty()){
                 foreach ($saleProducts as $saleProduct){
@@ -85,19 +88,19 @@ class SaleController extends Controller
                             'total_price' => $saleProduct->total_price + $total,
                         ];
                         Sale::findOrFail($saleProduct->id)->update($update);
-                        Product::findOrFail($productId)->update($productStock);
+                        Product::findOrFail($productId)->update($reduceProductStock);
                     }else{
                         Sale::create($create);
-                        Product::findOrFail($productId)->update($productStock);
+                        Product::findOrFail($productId)->update($reduceProductStock);
                     }
                 }
             }else{
                 Sale::create($create);
-                Product::findOrFail($productId)->update($productStock);
+                Product::findOrFail($productId)->update($reduceProductStock);
             }
             return redirect()->route('transaction.create', $transactionCode);
         }else{
-            return redirect()->route('transaction.create', $transactionCode)->with('fail','Jumlah stock produk tidak mencukupi! Stok produk tersisa ' . $productStock);
+            return redirect()->back()->withErrors('Jumlah stock produk tidak mencukupi! Stok produk tersisa ' . $productStock);
         }
     }
 
@@ -173,7 +176,7 @@ class SaleController extends Controller
             ]);
             return redirect()->route('transaction.create', $transactionCode);
         }else{
-            return redirect()->route('transaction.create', $transactionCode)->with('fail','Jumlah stock produk tidak mencukupi! Stok produk tersisa ' . $productStock);
+            return redirect()->back()->withErrors('Jumlah stock produk tidak mencukupi! Stok produk tersisa ' . $productStock);
         }
     }
 
@@ -188,7 +191,6 @@ class SaleController extends Controller
         $saleProduct = Sale::findOrFail($id);
         $productSaleQuantity = $saleProduct->quantity;
         $productId = $saleProduct->product_id;
-        $transactionCode = $saleProduct->transaction_code;
 
         $productStock = Product::findOrFail($productId)->stock;
         $originalProductStock = $productStock + $productSaleQuantity;
@@ -198,6 +200,6 @@ class SaleController extends Controller
         ]);
 
         Sale::findOrFail($id)->delete();
-        return redirect()->route('transaction.create', $transactionCode);
+        return redirect()->back();
     }
 }

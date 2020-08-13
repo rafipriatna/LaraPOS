@@ -135,7 +135,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table" id="saleTable">
                             <thead>
                                 <tr>
                                   <th scope="col">#</th>
@@ -357,10 +357,9 @@ $( document ).ready(function() {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-
     let discount = $('[name="discount"]').val();
     let discountPrice = $('[name="discount_price"]');
-    let subTotal = $('[name="sub_total"]').val().replace(',', '');
+    let subTotal = $('[name="sub_total"]').val().replace(/,/g, '');
     let grandTotal = $('[name="grand_total"]');
     let paid = $('[name="paid"]');
     let change = $('[name="change"]');
