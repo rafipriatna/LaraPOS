@@ -186,17 +186,32 @@
                     </div>
                 </div>
             </div>
-
-            <form action="{{ route('transaction.store') }}" method="post">
-                @csrf
-                <input type="hidden" name="transaction_code" value="{{ $transactionCode }}">
                 <div class="row">
-    
-                    <div class="col-lg-4">
+
+                    <div class="col-lg-3">
                         <div class="card">
-                            <div class="card-header">
-                                Opsi
+                            <div class="card-body">
+                                <form action="{{ route('sale.getCoupon') }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="transaction_code" value="{{ $transactionCode }}">
+                                    <div class="form-group">
+                                        <label>Kupon <code>(Jika ada)</code></label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" name="coupon_code" class="form-control"
+                                            onkeyup="this.value = this.value.toUpperCase();" onkeypress="return event.charCode != 32"
+                                            value="{{ session('coupon_code') }}">
+                                            <div class="input-group-append">
+                                              <button class="btn btn-primary" type="submit">Cek</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
+                        </div>
+                        <form action="{{ route('transaction.store') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="transaction_code" value="{{ $transactionCode }}" />
+                        <div class="card">
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>Customer</label>
@@ -205,16 +220,6 @@
                                             <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                                         @endforeach
                                     </select>
-                                </div>
-    
-                                <div class="form-group">
-                                    <label>Sub Total</label>
-                                    <div class="input-group mb-2">
-                                        <div class="input-group-prepend">
-                                          <div class="input-group-text">Rp.</div>
-                                        </div>
-                                        <input type="text" name="sub_total" class="form-control currency" value="{{ $subTotal }}" readonly/>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -229,27 +234,14 @@
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label>Kupon <code>(Jika ada)</code></label>
-                                            <div class="input-group mb-3">
-                                                <input type="text" name="coupon_code" class="form-control">
-                                                <div class="input-group-append">
-                                                  <button class="btn btn-primary" type="button">Cek</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="form-group">
                                             <label>Diskon</label>
                                             <div class="input-group mb-2">
-                                                <input type="text" name="discount" class="form-control" value="0" readonly>
+                                                <input type="text" name="discount" class="form-control" value="{{ session('discount') ? session('discount') : '0' }}" readonly>
                                                 <div class="input-group-append">
                                                   <div class="input-group-text">%</div>
                                                 </div>
-                                              </div>
+                                            </div>
                                         </div>
-                                    </div>
-        
-                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label>Potongan Diskon</label>
                                             <div class="input-group mb-2">
@@ -257,6 +249,18 @@
                                                   <div class="input-group-text">Rp.</div>
                                                 </div>
                                                 <input type="text" name="discount_price" class="form-control currency" value="0" readonly/>
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label>Sub Total</label>
+                                            <div class="input-group mb-2">
+                                                <div class="input-group-prepend">
+                                                  <div class="input-group-text">Rp.</div>
+                                                </div>
+                                                <input type="text" name="sub_total" class="form-control currency" value="{{ $subTotal }}" readonly/>
                                             </div>
                                         </div>
                                         

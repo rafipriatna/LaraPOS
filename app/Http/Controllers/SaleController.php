@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
 
 use App\Sale;
 use App\Product;
+use App\Coupon;
 use Auth;
 
 use App\Http\Requests\SaleRequest;
@@ -102,6 +104,58 @@ class SaleController extends Controller
         }else{
             return redirect()->back()->withErrors('Jumlah stock produk tidak mencukupi! Stok produk tersisa ' . $productStock);
         }
+    }
+
+    /**
+     * Get coupon discount.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getCoupon(Request $request){
+        $input = $request->all();
+        $input['coupon_code'] = strtoupper(str_replace(' ', '', $input['coupon_code']));
+        $couponCode = $input['coupon_code'];
+        $transactionCode = $input['transaction_code'];
+
+        $validator = Validator::make($input, [
+            'transaction_code' => 'required',
+            'coupon_code' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $hasCoupon = false;
+        $coupons = Coupon::where('coupon_code', $couponCode)->get();
+        foreach ($coupons as $coupon){
+            if (Carbon::create($coupon->expired) < Carbon::now()){
+                return redirect()->back()
+                    ->withErrors(['coupon_invalid' => 'Kupon sudah tidak berlaku.']);
+            }
+
+            if ($coupon->status == 0){
+                return redirect()->back()
+                    ->withErrors(['coupon_invalid' => 'Kupon tidak aktif.']);
+            }
+
+            $hasCoupon = true;
+            $discount = $coupon->discount;
+        }
+
+        if (!$hasCoupon){
+            return redirect()->back()
+                    ->withErrors(['coupon_invalid' => 'Kupon tidak ditemukan.']);
+        }
+
+        return redirect()->back()
+                    ->with([
+                        'coupon_code' => $couponCode,
+                        'discount' => $discount
+                    ]);
     }
 
     /**

@@ -29,6 +29,7 @@ Route::prefix('/admin')
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
     
+    Route::post('/sale/getCoupon', 'SaleController@getCoupon')->name('sale.getCoupon');
     Route::resource('sale', 'SaleController');
     Route::post('/transaction/storeTransaction', 'TransactionController@storeTransaction')->name('transaction.storeTransaction');
     Route::resource('transaction', 'TransactionController')->except([
