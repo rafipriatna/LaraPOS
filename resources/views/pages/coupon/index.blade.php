@@ -38,7 +38,6 @@
                                     <th>Kode Kupon</th>
                                     <th>Nama</th>
                                     <th>Keterangan</th>
-                                    <th>Kategori Produk</th>
                                     <th>Diskon</th>
                                     <th>Expired</th>
                                     <th>Status</th>
@@ -52,7 +51,6 @@
                                         <td>{{ $item->coupon_code }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->description }}</td>
-                                        <td>{{ $item->product_category_id == 0 ? 'Semua Kategori' : $item->category->name }}</td>
                                         <td>{{ $item->discount }}%</td>
                                         <td>{{ date('d-m-Y', strtotime($item->expired)) }}</td>
                                         <td>
@@ -77,7 +75,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="9" class="text-center">
+                                        <td colspan="8" class="text-center">
                                             Belum ada data kupon.
                                         </td>
                                     </tr>

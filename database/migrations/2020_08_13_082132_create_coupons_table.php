@@ -18,7 +18,6 @@ class CreateCouponsTable extends Migration
             $table->string('coupon_code');
             $table->string('name');
             $table->string('description');
-            $table->integer('product_category_id');
             $table->date('expired');
             $table->integer('status');
             $table->integer('discount');

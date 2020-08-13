@@ -27,7 +27,6 @@ class CouponRequest extends FormRequest
             'coupon_code' => 'required',
             'name' => 'required|string',
             'description' => 'required|string',
-            'product_category_id' => 'required|integer',
             'expired' => 'required|date',
             'status' => 'required|integer',
             'discount' => 'required|numeric|min:1|max:100'

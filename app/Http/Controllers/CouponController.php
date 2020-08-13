@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Coupon;
-use App\ProductCategory;
 
 use App\Http\Requests\CouponRequest;
 
@@ -20,9 +19,7 @@ class CouponController extends Controller
     {
         $title = "Coupon List";
 
-        $items = Coupon::with([
-            'category'
-        ])->get();
+        $items = Coupon::all();
 
         return view('pages.coupon.index', [
             'title' => $title,
@@ -39,11 +36,8 @@ class CouponController extends Controller
     {
         $title = "Create New Coupon";
 
-        $categories = ProductCategory::all();
-
         return view('pages.coupon.create', [
-            'title' => $title,
-            'categories' => $categories
+            'title' => $title
         ]);
     }
 
@@ -84,15 +78,11 @@ class CouponController extends Controller
     {
         $title = "Edit Coupon";
 
-        $item = Coupon::with([
-            'category'
-        ])->findOrFail($id);
-        $categories = ProductCategory::all();
+        $item = Coupon::findOrFail($id);
 
         return view('pages.coupon.edit', [
             'title' => $title,
-            'item' => $item,
-            'categories' => $categories
+            'item' => $item
         ]);
     }
 

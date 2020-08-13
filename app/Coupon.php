@@ -18,9 +18,4 @@ class Coupon extends Model
     ];
 
     protected $hidden = [];
-
-    // Relasi
-    public function category() {
-        return $this->belongsTo(ProductCategory::class, 'product_category_id', 'id');
-    }
 }

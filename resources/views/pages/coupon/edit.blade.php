@@ -65,27 +65,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Kategori</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <i class="fas fa-tag"></i>
-                                            </div>
-                                        </div>
-                                        <select class="form-control" name="product_category_id">
-                                            <option value="0" {{ $item->product_category_id == 1 ? 'selected' : ''}}>
-                                                Semua Kategori
-                                            </option>
-                                            @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}"
-                                                    {{ $item->product_category_id == $category->id ? 'selected' : '' }}>
-                                                    {{ $category->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label>Expired</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
