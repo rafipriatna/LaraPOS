@@ -77,7 +77,7 @@
                                 @empty
                                     <tr>
                                         <td colspan="8" class="text-center">
-                                            Belum ada data produk.
+                                            Belum ada data user.
                                         </td>
                                     </tr>
                                 @endforelse
