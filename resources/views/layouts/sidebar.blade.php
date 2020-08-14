@@ -47,6 +47,10 @@
             <a class="nav-link" href="{{ route('coupon.index') }}"><i class="ion-cash"></i> <span>Coupons</span></a>
           </li>
 
+          <li class="{{ (Request::url() === route('about.index')) ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('about.index') }}"><i class="ion-android-settings"></i> <span>About Company</span></a>
+          </li>
+
         </li>
       </li>
 

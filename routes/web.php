@@ -24,6 +24,8 @@ Route::prefix('/admin')
         Route::resource('product-category', 'ProductCategoryController');
         Route::resource('customer', 'CustomerController');
         Route::resource('coupon', 'CouponController');
+
+        Route::get('/about', 'AboutController@index')->name('about.index');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
