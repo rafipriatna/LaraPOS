@@ -78,41 +78,6 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3">
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            Produk
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-barcode"></i>
-                                        </div>
-                                    </div>
-                                    <input type="text" class="form-control" name="product_code" placeholder="Kode Produk" value="{{ old('product_code') }}" disabled>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-file-signature"></i>
-                                        </div>
-                                    </div>
-                                    <input type="number" class="form-control" name="quantity" placeholder="Quantity" value="{{ old('quantity') }}" disabled>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer text-right" style="margin-bottom: -9px;">
-                            <button type="button" class="btn disabled btn-primary">Kirim</button>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="col-lg">
                     <div class="card card-block d-flex" style="height: 311px">
                         <div class="card-header">
@@ -175,15 +140,10 @@
                         <div class="card-body">
                             <input type="hidden" name="transaction_code" value="{{ $transactionCode }}">
                             <div class="form-group">
-                                <label>Kupon <code>(Jika ada)</code></label>
-                                <div class="input-group mb-3">
-                                    <input type="text" name="coupon_code" class="form-control"
-                                    onkeyup="this.value = this.value.toUpperCase();" onkeypress="return event.charCode != 32"
-                                    value="{{ $data['couponCode'] }}" disabled>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary disabled" type="submit">Cek</button>
-                                    </div>
-                                </div>
+                                <label>Kupon</label>
+                                <input type="text" name="coupon_code" class="form-control"
+                                onkeyup="this.value = this.value.toUpperCase();" onkeypress="return event.charCode != 32"
+                                value="{{ $data['couponCode'] }}" disabled>
                             </div>
                         </div>
                     </div>
