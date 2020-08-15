@@ -13,18 +13,30 @@ class CompanyProfileController extends Controller
     public function index(){
         $title = "Company Profile";
 
+        $item = CompanyProfile::find(1);
+
         return view('pages.companyProfile.index', [
-            'title' => $title
+            'title' => $title,
+            'item' => $item
         ]);
     }
 
-    public function save(AboutRequest $request){
+    public function save(CompanyProfileRequest $request){
         $data = $request->all();
+        $image = $request->file('image');
 
-        $currentProfile = About::findOrFail(1);
+        if ($image){
+            $data['image'] = $image->store(
+                'assets/company', 'public'
+            );
+        }else{
+            $data['image'] = "";
+        }
+
+        $currentProfile = CompanyProfile::find(1);
 
         if (!$currentProfile){
-            About::create($data);
+            CompanyProfile::create($data);
             return redirect()->route('companyProfile.index')->with('success','Profil toko berhasil disimpan!');
         }else{
             $currentProfile->update($data);

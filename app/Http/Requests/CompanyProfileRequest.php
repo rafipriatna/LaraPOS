@@ -24,9 +24,10 @@ class CompanyProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'requred|string',
+            'image' => 'image',
+            'name' => 'required|string',
             'address' => 'required',
-            'conctact' => 'required'
+            'contact' => 'required'
         ];
     }
 }
