@@ -58,7 +58,7 @@ $("#transactionReport").dataTable({
           $(win.document.body)
               .css( 'font-size', '10pt' )
               .prepend(
-                  '<img src="http://datatables.net/media/images/logo-fade.png" style="margin: auto; position:absolute; top: 0; left: 0; bottom: 0; right: 0;" />'
+                  "<img src='" + document.location.origin + "/storage/assets/company/company.jpg' style='margin: auto; position:absolute; top: 0; left: 0; bottom: 0; right: 0; opacity: 30%' />"
               );
 
           $(win.document.body).find( 'table' )

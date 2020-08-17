@@ -26,8 +26,8 @@ class CompanyProfileController extends Controller
         $image = $request->file('image');
 
         if ($image){
-            $data['image'] = $image->store(
-                'assets/company', 'public'
+            $data['image'] = $image->storeAs(
+                'public/assets/company', 'company.jpg'
             );
         }else{
             $data['image'] = "";
