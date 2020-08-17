@@ -57,7 +57,7 @@
       @endif
 
       <li class="menu-header">LaraPOS</li>
-        <li class="{{ (Request::url() === route('transaction.index') || Request::is('transaction/create/*')) || route('transaction.report') ? 'dropdown active' : 'dropdown' }}">
+        <li class="{{ (Request::is('transaction/index') || Request::is('transaction/report') || Request::is('transaction/create/*')) ? 'dropdown active' : 'dropdown' }}">
           <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
             <i class="ion-ios-cart"></i> <span>Transaction</span>
           </a>
