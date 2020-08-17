@@ -111,7 +111,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'photo' => 'image',
             'name' => 'required|string',
-            'email' => 'required|email:rfc,dns|unique:users,id,' . \Request::instance()->id,
+            'email' => 'required|email:rfc,dns|unique:users,email,' . $id . ',id',
             'password' => $request->input('password') ? 'min:8' : ''
         ]);
 
