@@ -25,8 +25,8 @@ Route::prefix('/admin')
         Route::resource('customer', 'CustomerController');
         Route::resource('coupon', 'CouponController');
 
-        Route::get('/profile', 'CompanyProfileController@index')->name('companyProfile.index');
-        Route::post('/profile', 'CompanyProfileController@save')->name('companyProfile.save');
+        Route::get('/company', 'CompanyProfileController@index')->name('companyProfile.index');
+        Route::post('/company', 'CompanyProfileController@save')->name('companyProfile.save');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -40,6 +40,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'create'
     ]);
     Route::get('/transaction/create/{transaction_code?}', 'TransactionController@create')->name('transaction.create');
+
+    Route::get('/profile', 'ProfileController@index')->name('profile.index');
+    Route::put('/profile', 'ProfileController@update')->name('profile.update');
 });
 
 Auth::routes(['verify' => true]);
