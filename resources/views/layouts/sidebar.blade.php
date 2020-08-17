@@ -90,29 +90,32 @@
 <div class="modal fade" tabindex="-1" role="dialog" id="transactionModal">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Transaction Report</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label>Rentang Waktu</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <div class="input-group-text">
-                <i class="fas fa-calendar"></i>
+      <form action="{{ route('transaction.report') }}" method="post">
+        @csrf
+        <div class="modal-header">
+          <h5 class="modal-title">Transaction Report</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Rentang Waktu</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <i class="fas fa-calendar"></i>
+                </div>
               </div>
+              <input type="text" class="form-control daterange-cus" name="date">
             </div>
-            <input type="text" class="form-control daterange-cus" id="test">
           </div>
         </div>
-      </div>
-      <div class="modal-footer bg-whitesmoke br">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onclick="console.log(test.value)">Save changes</button>
-      </div>
+        <div class="modal-footer bg-whitesmoke br">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary">Proses</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

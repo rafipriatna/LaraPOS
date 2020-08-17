@@ -8,7 +8,7 @@
 "use strict";
 
 $('.daterange-cus').daterangepicker({
-    locale: {format: 'DD/MM/YYYY'},
+    locale: {format: 'DD-MM-YYYY'},
     drops: 'down',
     opens: 'right'
 });

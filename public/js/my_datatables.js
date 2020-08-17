@@ -39,3 +39,32 @@ $("#table-2").dataTable({
     { "sortable": false, "targets": [0,2,3] }
   ]
 });
+
+$("#transactionReport").dataTable({
+  dom: 'Bfrtip',
+  buttons: [
+    {
+      extend: 'csv',
+      className: 'btn btn-info'
+    },
+    {
+      extend: 'excel',
+      className: 'btn btn-success'
+    },
+    {
+      extend: 'print',
+      className: 'btn btn-primary',
+      customize: function ( win ) {
+          $(win.document.body)
+              .css( 'font-size', '10pt' )
+              .prepend(
+                  '<img src="http://datatables.net/media/images/logo-fade.png" style="margin: auto; position:absolute; top: 0; left: 0; bottom: 0; right: 0;" />'
+              );
+
+          $(win.document.body).find( 'table' )
+              .addClass( 'compact' )
+              .css( 'font-size', 'inherit' );
+      }
+    },
+  ]
+});

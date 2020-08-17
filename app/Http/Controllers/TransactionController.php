@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 use App\Sale;
 use App\Customer;
@@ -154,5 +155,32 @@ class TransactionController extends Controller
     public function destroy($id)
     {
         
+    }
+
+    /**
+     * Show a transaction report by date in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function report(Request $request){
+        $title = "Transaction Report";
+
+        $data = $request->all();
+        $date = explode(' - ', $data['date']);
+
+        $fromDate   = Carbon::parse($date[0])
+                        ->startOfDay()
+                        ->toDateTimeString();
+        $toDate     = Carbon::parse($date[1])
+                        ->endOfDay()
+                        ->toDateTimeString();
+
+        $items = Transaction::whereBetween('created_at', [new Carbon($fromDate), new Carbon($toDate)])->get();
+    
+        return view('pages.transaction.report', [
+            'title' => $title,
+            'items' => $items
+        ]);
     }
 }

@@ -35,6 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/sale/getCoupon', 'SaleController@getCoupon')->name('sale.getCoupon');
     Route::resource('sale', 'SaleController');
     Route::post('/transaction/storeTransaction', 'TransactionController@storeTransaction')->name('transaction.storeTransaction');
+    Route::post('/transaction/report', 'TransactionController@report')->name('transaction.report');
     Route::resource('transaction', 'TransactionController')->except([
         'create'
     ]);
