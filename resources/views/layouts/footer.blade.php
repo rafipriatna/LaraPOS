@@ -8,6 +8,7 @@
     <script src="{{ url('assets/js/stisla.js') }}"></script>
 
     <!-- Addon Javascript -->
+    <script src="{{ url('assets/modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     @yield('addon-script')
 
     <!-- Template JS File -->

@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ url('assets/modules/ionicons/css/ionicons.min.css') }}">
 
     <!-- Addon CSS -->
+    <link rel="stylesheet" href="{{ url('assets/modules/bootstrap-daterangepicker/daterangepicker.css') }}">
     @yield('addon-css')
 
     <!-- Template CSS -->
