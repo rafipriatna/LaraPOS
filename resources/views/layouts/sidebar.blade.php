@@ -57,7 +57,7 @@
       @endif
 
       <li class="menu-header">LaraPOS</li>
-        <li class="{{ (Request::url() === route('transaction.index') || Request::is('transaction/create/*')) ? 'dropdown active' : 'dropdown' }}">
+        <li class="{{ (Request::url() === route('transaction.index') || Request::is('transaction/create/*')) || route('transaction.report') ? 'dropdown active' : 'dropdown' }}">
           <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
             <i class="ion-ios-cart"></i> <span>Transaction</span>
           </a>
@@ -73,7 +73,7 @@
                 <i class="ion-ios-list"></i> <span>Transaction List</span></a>
             </li>
 
-            <li>
+            <li class="{{ Request::url() === route('transaction.report') ? 'active' : '' }}">
               <a class="nav-link" href="#" data-toggle="modal" data-target="#transactionModal">
                 <i class="ion-clipboard"></i> <span>Transaction Report</span></a>
             </li>
