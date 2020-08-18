@@ -4,6 +4,9 @@
 ## About
 Aplikasi pencatatan penjualan toko sederhana dibuat dengan Laravel 7.
 
+### Screenshot
+![Screenshot transaksi](transaksi.png)
+
 ## Installasi
 ```
 git clone https://github.com/rafipriatna/LaraPos
