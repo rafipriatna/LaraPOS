@@ -21,9 +21,11 @@ class CreateProductsTable extends Migration
             $table->string('selling_price');
             $table->string('purchase_price');
             $table->integer('stock');
-            $table->integer('category_id');
+            $table->unsignedBigInteger('category_id');
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('product_categories');
         });
     }
 
