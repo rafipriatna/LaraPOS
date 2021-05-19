@@ -15,10 +15,10 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('transaction_code')->references('id')->on('sales');
+            $table->string('transaction_code');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('customer_id');
-            $table->string('coupon_code');
+            $table->unsignedBigInteger('coupon_id');
             $table->integer('discount');
             $table->string('discount_price');
             $table->string('sub_total');
@@ -29,6 +29,7 @@ class CreateTransactionsTable extends Migration
             
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreign('coupon_id')->references('id')->on('coupons');
         });
     }
 

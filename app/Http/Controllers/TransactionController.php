@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 use App\Sale;
+use App\Coupon;
 use App\Customer;
 use App\Transaction;
 use App\User;
@@ -73,15 +74,25 @@ class TransactionController extends Controller
      */
     public function store(TransactionRequest $request)
     {
-        $data = $request->all();
+        $request = $request->all();
 
-        $data['coupon_code'] = $data['coupon_code'] !== null ? $data['coupon_code'] : 0;
-        $data['sub_total'] = str_replace(',', '', $data['sub_total']);
-        $data['discount_price'] = str_replace(',', '', $data['discount_price']);
-        $data['grand_total'] = str_replace(',', '', $data['grand_total']);
-        $data['paid'] = str_replace(',', '', $data['paid']);
-        $data['change'] = str_replace(',', '', $data['change']);
-
+        if ($request['coupon_code']) {
+            $kupon = Coupon::where('coupon_code', $request['coupon_code'])->first();
+            $data['coupon_id'] = $kupon->id;
+        } else {
+            $data['coupon_id'] = 0;
+        }
+        
+        $data['transaction_code'] = $request['transaction_code'];
+        $data['user_id'] = $request['user_id'];
+        $data['customer_id'] = $request['customer_id'];
+        $data['discount'] = $request['discount'];
+        $data['sub_total'] = str_replace(',', '', $request['sub_total']);
+        $data['discount_price'] = str_replace(',', '', $request['discount_price']);
+        $data['grand_total'] = str_replace(',', '', $request['grand_total']);
+        $data['paid'] = str_replace(',', '', $request['paid']);
+        $data['change'] = str_replace(',', '', $request['change']);
+        
         $transactionCode = now()->format('dmyHis') . Transaction::all()->count() . Auth::user()->id;
         
         Transaction::create($data);
@@ -115,7 +126,7 @@ class TransactionController extends Controller
 
         $data = [
             'date' => $transaction->created_at->toDateTimeString(),
-            'couponCode' => $transaction->coupon_code ? $transaction->coupon_code : '',
+            'couponCode' => $transaction->coupon_id ? Coupon::find($transaction->coupon_id)->first()->coupon_code : '',
             'customerId' => $transaction->customer_id,
             'discount' => $transaction->discount,
             'paid' => $transaction->paid,

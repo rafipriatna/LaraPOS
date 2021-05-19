@@ -17,7 +17,7 @@ class CreateSalesTables extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('product_id');
-            $table->string('transaction_code');
+            $table->string('transaction_code')->references('transaction_code')->on('transactions');
             $table->string('product_price');
             $table->string('quantity');
             $table->string('total_price');
