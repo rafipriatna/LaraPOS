@@ -84,7 +84,7 @@ class SaleController extends Controller
         // Cek stok produk
         if ($productStock == 0){
             return redirect()->back()->withErrors('Stok ' . $productName . ' kosong!');
-        }elseif ((int)$quantity < $productStock){
+        }elseif ((int)$quantity <= $productStock){
             // Cek jika produknya sama, maka update qty, harga totalnya, dan update stock barang.
             if (!$saleProducts->isEmpty()){
                 foreach ($saleProducts as $saleProduct){
