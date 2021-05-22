@@ -56,6 +56,10 @@ class SaleController extends Controller
             $productStock = $product->stock;
         }
 
+        if (!isset($productId)) {
+            return redirect()->back()->withErrors('Produk tidak ditemukan. ' );
+        }
+
         $saleProducts = Sale::where([
                 ['transaction_code', '=', $transactionCode],
                 ['product_id', '=', $productId]
