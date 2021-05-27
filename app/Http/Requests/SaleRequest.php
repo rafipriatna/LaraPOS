@@ -25,7 +25,7 @@ class SaleRequest extends FormRequest
     {
         return [
             'product_code' => 'required',
-            'transaction_code' => 'required',
+            'transaction_code' => 'required|nullable',
             'quantity' => 'required|integer'
         ];
     }

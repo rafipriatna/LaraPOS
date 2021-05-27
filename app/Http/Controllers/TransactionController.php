@@ -28,7 +28,7 @@ class TransactionController extends Controller
 
         $items = Transaction::with([
             'customer'
-        ])->get();
+        ])->where('valid', TRUE)->get();
 
         return view('pages.transaction.index', [
             'title' => $title,
@@ -80,11 +80,10 @@ class TransactionController extends Controller
             $kupon = Coupon::where('coupon_code', $request['coupon_code'])->first();
             $data['coupon_id'] = $kupon->id;
         } else {
-            $data['coupon_id'] = 0;
+            $data['coupon_id'] = null;
         }
         
-        $data['transaction_code'] = $request['transaction_code'];
-        $data['user_id'] = $request['user_id'];
+        $data['user_id'] = Auth::user()->id;
         $data['customer_id'] = $request['customer_id'];
         $data['discount'] = $request['discount'];
         $data['sub_total'] = str_replace(',', '', $request['sub_total']);
@@ -92,10 +91,12 @@ class TransactionController extends Controller
         $data['grand_total'] = str_replace(',', '', $request['grand_total']);
         $data['paid'] = str_replace(',', '', $request['paid']);
         $data['change'] = str_replace(',', '', $request['change']);
+        $data['valid'] = TRUE;
         
         $transactionCode = now()->format('dmyHis') . Transaction::all()->count() . Auth::user()->id;
         
-        Transaction::create($data);
+        Transaction::where('transaction_code', $request['transaction_code'])
+                    ->update($data);
         return redirect()->route('transaction.create', $transactionCode)->with('success','Transaksi berhasil disimpan!');
     }
 
@@ -120,7 +121,10 @@ class TransactionController extends Controller
         $transaction = Transaction::with([
             'customer',
             'user'
-        ])->where('transaction_code', $transactionCode)->first();
+        ])
+        ->where('transaction_code', $transactionCode)
+        ->where('valid', TRUE)
+        ->first();
 
         $user = User::findOrFail($transaction['user_id'])->name;
 
@@ -187,7 +191,8 @@ class TransactionController extends Controller
                         ->endOfDay()
                         ->toDateTimeString();
 
-        $items = Transaction::whereBetween('created_at', [new Carbon($fromDate), new Carbon($toDate)])->get();
+        $items = Transaction::whereBetween('created_at', [new Carbon($fromDate), new Carbon($toDate)])
+                            ->where('valid', TRUE)->get();
     
         return view('pages.transaction.report', [
             'title' => $title,

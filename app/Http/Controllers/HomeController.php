@@ -31,7 +31,7 @@ class HomeController extends Controller
 
         $customer = Customer::all()->count();
 
-        $transaction = Transaction::whereMonth('created_at', '=', date('m'))->get();
+        $transaction = Transaction::whereMonth('created_at', '=', date('m'))->where('valid', TRUE)->get();
         $profit = $transaction->sum('grand_total');
         $totalTransaction = $transaction->count();
 

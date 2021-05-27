@@ -9,7 +9,7 @@ use App\Product;
 class Sale extends Model
 {
     protected $fillable = [
-        'user_id', 'transaction_code', 'product_id',
+        'transaction_code', 'product_id',
         'product_price', 'quantity', 'total_price'
     ];
 

@@ -9,7 +9,7 @@ use Illuminate\Support\Carbon;
 use App\Sale;
 use App\Product;
 use App\Coupon;
-use Auth;
+use App\Transaction;
 
 use App\Http\Requests\SaleRequest;
 
@@ -48,6 +48,12 @@ class SaleController extends Controller
         $transactionCode = $input['transaction_code'];
         $quantity = $input['quantity'];
 
+        // Find or create transaction
+        Transaction::firstOrCreate(
+            ['transaction_code' => $transactionCode],
+            ['valid' => FALSE],
+        );
+
         $products = Product::where('product_code', $input['product_code'])->get();
         foreach ($products as $product){
             $productId = $product->id;
@@ -57,7 +63,7 @@ class SaleController extends Controller
         }
 
         if (!isset($productId)) {
-            return redirect()->back()->withErrors('Produk tidak ditemukan. ' );
+            return redirect()->back()->withErrors('Produk tidak ditemukan.' );
         }
 
         $saleProducts = Sale::where([
@@ -73,7 +79,6 @@ class SaleController extends Controller
         ];
 
         $create = [
-            'user_id' => Auth::user()->id,
             'transaction_code' => $transactionCode,
             'product_id' => $productId,
             'product_price' => $productPrice,

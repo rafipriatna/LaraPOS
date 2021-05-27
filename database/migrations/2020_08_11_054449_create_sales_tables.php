@@ -15,15 +15,14 @@ class CreateSalesTables extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('product_id');
-            $table->string('transaction_code')->references('transaction_code')->on('transactions');
+            $table->string('transaction_code');
             $table->string('product_price');
             $table->string('quantity');
             $table->string('total_price');
             $table->timestamps();
            
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('transaction_code')->references('transaction_code')->on('transactions');
             $table->foreign('product_id')->references('id')->on('products');
         });
     }

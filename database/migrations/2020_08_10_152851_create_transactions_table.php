@@ -14,17 +14,17 @@ class CreateTransactionsTable extends Migration
     public function up()
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->id();
-            $table->string('transaction_code');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('customer_id');
-            $table->unsignedBigInteger('coupon_id');
-            $table->integer('discount');
-            $table->string('discount_price');
-            $table->string('sub_total');
-            $table->string('grand_total');
-            $table->string('paid');
-            $table->string('change');
+            $table->string('transaction_code')->primary();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('customer_id')->nullable();
+            $table->unsignedBigInteger('coupon_id')->nullable()->unsigned();
+            $table->integer('discount')->nullable();
+            $table->string('discount_price')->nullable();
+            $table->string('sub_total')->nullable();
+            $table->string('grand_total')->nullable();
+            $table->string('paid')->nullable();
+            $table->string('change')->nullable();
+            $table->boolean('valid');
             $table->timestamps();
             
             $table->foreign('user_id')->references('id')->on('users');
