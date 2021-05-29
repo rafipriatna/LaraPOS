@@ -306,7 +306,7 @@
     
                 <div class="text-right">
                     <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                    <button type="submit" class="btn btn-primary">Buat Transaksi</button>
+                    <button type="submit" class="btn btn-primary" id="createTransaction" disabled>Buat Transaksi</button>
                 </div>
             </form>
 
@@ -385,6 +385,12 @@ $( document ).ready(function() {
             change.val(0)
         }else{
             change.val(currencyFormat(changeValue));
+        }
+
+        if (paidValue >= (subTotal - sumDiscountPrice)) {
+            $(':input[id="createTransaction"]').prop('disabled', false);
+        } else {
+            $(':input[id="createTransaction"]').prop('disabled', true);
         }
     });
 
