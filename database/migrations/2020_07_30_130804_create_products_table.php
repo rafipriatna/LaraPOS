@@ -18,8 +18,8 @@ class CreateProductsTable extends Migration
             $table->string('product_code');
             $table->string('photo');
             $table->string('name');
-            $table->string('selling_price');
-            $table->string('purchase_price');
+            $table->integer('selling_price');
+            $table->integer('purchase_price');
             $table->integer('stock');
             $table->unsignedBigInteger('category_id');
             $table->softDeletes();

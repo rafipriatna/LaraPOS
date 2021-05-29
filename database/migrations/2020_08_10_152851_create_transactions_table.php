@@ -19,11 +19,11 @@ class CreateTransactionsTable extends Migration
             $table->unsignedBigInteger('customer_id')->nullable();
             $table->unsignedBigInteger('coupon_id')->nullable()->unsigned();
             $table->integer('discount')->nullable();
-            $table->string('discount_price')->nullable();
-            $table->string('sub_total')->nullable();
-            $table->string('grand_total')->nullable();
-            $table->string('paid')->nullable();
-            $table->string('change')->nullable();
+            $table->integer('discount_price')->nullable();
+            $table->integer('sub_total')->nullable();
+            $table->integer('grand_total')->nullable();
+            $table->integer('paid')->nullable();
+            $table->integer('change')->nullable();
             $table->boolean('valid');
             $table->timestamps();
             
