@@ -2,6 +2,7 @@
 
 const flashMessageSuccess = $('.flash-message-success').data('flashmessage');
 const flashMessageFail = $('.flash-message-fail').data('flashmessage');
+const transactionCode = $('.flash-message-success').data('transactioncode');
 
 if (flashMessageSuccess){
     iziToast.success({
@@ -9,6 +10,10 @@ if (flashMessageSuccess){
         message: flashMessageSuccess,
         position: 'topRight'
     });
+
+    if (flashMessageSuccess == "Transaksi berhasil disimpan!") {
+      window.open('/struk/' + transactionCode, 'mywindow', 'toolbar=0,scrollbars=1,statusbar=0,menubar=0,resizable=0,height=500,width=420')
+    }
 }
 
 if (flashMessageFail){

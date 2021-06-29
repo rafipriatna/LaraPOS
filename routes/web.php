@@ -36,6 +36,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('sale', 'SaleController');
     Route::post('/transaction/storeTransaction', 'TransactionController@storeTransaction')->name('transaction.storeTransaction');
     Route::post('/transaction/report', 'TransactionController@report')->name('transaction.report');
+    Route::get('/struk/{transaction_code?}', 'TransactionController@struk')->name('transaction.struk');
     Route::resource('transaction', 'TransactionController')->except([
         'create'
     ]);

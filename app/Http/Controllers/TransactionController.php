@@ -10,6 +10,7 @@ use App\Coupon;
 use App\Customer;
 use App\Transaction;
 use App\User;
+use App\CompanyProfile;
 use Auth;
 
 use App\Http\Requests\SaleRequest;
@@ -43,7 +44,7 @@ class TransactionController extends Controller
      */
     public function create($transactionCode)
     {
-        if (is_null($transactionCode)){
+        if (is_null($transactionCode)) {
             abort(404);
         }
 
@@ -82,7 +83,7 @@ class TransactionController extends Controller
         } else {
             $data['coupon_id'] = null;
         }
-        
+
         $data['user_id'] = Auth::user()->id;
         $data['customer_id'] = $request['customer_id'];
         $data['discount'] = $request['discount'];
@@ -92,12 +93,12 @@ class TransactionController extends Controller
         $data['paid'] = str_replace(',', '', $request['paid']);
         $data['change'] = str_replace(',', '', $request['change']);
         $data['valid'] = TRUE;
-        
+
         $transactionCode = now()->format('dmyHis') . Transaction::all()->count() . Auth::user()->id;
-        
+
         Transaction::where('transaction_code', $request['transaction_code'])
-                    ->update($data);
-        return redirect()->route('transaction.create', $transactionCode)->with('success','Transaksi berhasil disimpan!');
+            ->update($data);
+        return redirect()->route('transaction.create', $transactionCode)->with(['success' => 'Transaksi berhasil disimpan!', 'transactionCode' => $request['transaction_code']]);
     }
 
     /**
@@ -122,9 +123,9 @@ class TransactionController extends Controller
             'customer',
             'user'
         ])
-        ->where('transaction_code', $transactionCode)
-        ->where('valid', TRUE)
-        ->first();
+            ->where('transaction_code', $transactionCode)
+            ->where('valid', TRUE)
+            ->first();
 
         $user = User::findOrFail($transaction['user_id'])->name;
 
@@ -146,7 +147,6 @@ class TransactionController extends Controller
             'subTotal' => $subTotal,
             'data' => $data
         ]);
-        
     }
 
     /**
@@ -158,7 +158,6 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
     }
 
     /**
@@ -169,7 +168,6 @@ class TransactionController extends Controller
      */
     public function destroy($id)
     {
-        
     }
 
     /**
@@ -178,25 +176,67 @@ class TransactionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function report(Request $request){
+    public function report(Request $request)
+    {
         $title = "Transaction Report";
 
         $data = $request->all();
         $date = explode(' - ', $data['date']);
 
         $fromDate   = Carbon::parse($date[0])
-                        ->startOfDay()
-                        ->toDateTimeString();
+            ->startOfDay()
+            ->toDateTimeString();
         $toDate     = Carbon::parse($date[1])
-                        ->endOfDay()
-                        ->toDateTimeString();
+            ->endOfDay()
+            ->toDateTimeString();
 
         $items = Transaction::whereBetween('created_at', [new Carbon($fromDate), new Carbon($toDate)])
-                            ->where('valid', TRUE)->get();
-    
+            ->where('valid', TRUE)->get();
+
         return view('pages.transaction.report', [
             'title' => $title,
             'items' => $items
+        ]);
+    }
+
+    public function struk($transactionCode)
+    {
+        $sales = Sale::with([
+            'product'
+        ])->where('transaction_code', $transactionCode);
+        $items = $sales->get();
+        $subTotal = $sales->sum('total_price');
+
+        $transaction = Transaction::with([
+            'customer',
+            'user'
+        ])
+            ->where('transaction_code', $transactionCode)
+            ->where('valid', TRUE)
+            ->first();
+
+        $customer = Customer::where('id', $transaction->customer_id)->first();
+        $user = User::findOrFail($transaction['user_id'])->name;
+
+        $companyProfile = CompanyProfile::find(1);
+
+        $data = [
+            'date' => $transaction->created_at->toDateTimeString(),
+            'couponCode' => $transaction->coupon_id ? Coupon::find($transaction->coupon_id)->first()->coupon_code : '',
+            'discount' => $transaction->discount,
+            'paid' => $transaction->paid,
+            'change' => $transaction->change,
+            'grandTotal' => $transaction->grand_total,
+            'user' => $user,
+            'companyProfile' => $companyProfile
+        ];
+
+        return view('pages.transaction.struk', [
+            'transactionCode' => $transactionCode,
+            'items' => $items,
+            'customer' => $customer,
+            'subTotal' => $subTotal,
+            'data' => $data
         ]);
     }
 }
